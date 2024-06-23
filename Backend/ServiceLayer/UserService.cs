@@ -43,5 +43,4 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
 
 }
 }
-^X
 
