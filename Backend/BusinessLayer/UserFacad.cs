@@ -1,8 +1,22 @@
 ﻿using System;
+using System.Collections.Generic; 
 
-public class Class1
+
+
+
+namespace IntroSE.Kanban.Backend.ServiceLayer
 {
-	public Class1()
-	{
-	}
+
+    class UserFacad
+    {
+        private readonly Dictionary<string, User> _users = new Dictionary<string, User>();
+        void Register(string email, string password )
+        {
+            if (_users.ContainsKey(email)) { 
+            throw new Exception ($"Email {email} already exists")}
+            User u =new User(email, password);
+           _users.Add(email, u);
+        }
+    }
 }
+
