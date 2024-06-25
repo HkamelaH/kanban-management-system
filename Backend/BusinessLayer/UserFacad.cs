@@ -11,9 +11,11 @@ using log4net;
 
 
 
+
 namespace kanban.Backend.Business
 {
-
+    
+    
     public class UserFacad
     {
         private readonly Dictionary<string, User> _users = new Dictionary<string, User>();
