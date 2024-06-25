@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace IntroSE.Kanban.Backend.ServiceLayer { 
+namespace IntroSE.kanban2024-2024-100.Backend.BusinessLayer { 
 
 public class User {
         private string password;
@@ -20,6 +21,7 @@ public class User {
             if(email==null)
                 throw new ArgumentNullException ("email");
                 this.email = email;
+        
         }
     }
 }

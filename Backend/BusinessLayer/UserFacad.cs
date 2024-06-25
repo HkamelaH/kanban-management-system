@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 
 
 
 
-namespace IntroSE.Kanban.Backend.ServiceLayer
+
+namespace IntroSE.kanban2024-2024-100.Backend.BusinessLayer
 {
 
-    class UserFacad
+   public class UserFacad
     {
         private readonly Dictionary<string, User> _users = new Dictionary<string, User>();
         void Register(string email, string password )
@@ -15,6 +16,9 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
             if (_users.ContainsKey(email)) { 
             throw new Exception ($"Email {email} already exists")}
             User u =new User(email, password);
+        
+           
+            
            _users.Add(email, u);
         }
     }
