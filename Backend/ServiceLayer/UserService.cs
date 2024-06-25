@@ -1,32 +1,33 @@
 using System;
-using System;
-using System.Collection.Generic;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
-using IntroSE.Kanban.Backend.ServiceLayer.Response;
 
 
 
 
 
 
+
+namespace kanban.Backend.Service
+{
 
     /*
      * ErrorMessage:string
      * ReturnValue:object
      * }
      * */
-    class UserService
+   public class UserService
     {
-   
-    
-    
-        UserFacade userFacade;
+       
+       
+
+       private UserFacade userFacade;
         public UserService()
         {
             this.userFacade = new UserFacade();
-        
+
         }
 
         /// <summary>
@@ -35,15 +36,21 @@ using IntroSE.Kanban.Backend.ServiceLayer.Response;
         /// <param name="email">the email the user is using </param>
         /// <param name="password">the password the user is using </param>
         /// <returns></returns>
-        public string Register(string email, string password) { try { userFacade.Register(email, password); }
-            catch {
-            Response response = new Response(Exception.Message);
+        public string Register(string email, string password) {
             
-            
+            try { userFacade.Register(email, password);
+                Response response = new Response();
+                return JsonSerializer.Serialize(response);
 
 
 
-            return $"ErrorMessage:\"{Exception.Message}\",RetuenValue:\"}}";
+
+            }
+            catch(Exception ex) {
+                Response response = new Response(ex.Message);
+                return JsonSerializer.Serialize(response);
+
+        
 
             }
 
@@ -54,7 +61,20 @@ using IntroSE.Kanban.Backend.ServiceLayer.Response;
             /// <param name="email">this is the email that the user have </param>
             /// <param name="password"this is the password the user is using ></param>
             /// <returns></returns>
-            public string Login(string email, string password) { userFacade.Login(email, password); }
+            public string Login(string email, string password) { try { userFacade.Login(email, password);
+
+                    Response response = new Response();
+                    return JsonSerializer.Serialize(response);
+
+
+
+
+                }
+                catch (Exception ex) {
+                    Response response = new Response(ex.Message);
+                    return JsonSerializer.Serialize(response);
+                }
+            }
 
 
             /// <summary>
@@ -62,7 +82,23 @@ using IntroSE.Kanban.Backend.ServiceLayer.Response;
             /// </summary>
             /// <param name="email">this is the email the user is using</param>
             /// <returns></returns>
-            public string Logout(string email) { userFacade.Logout(email); }
+            public string Logout(string email) { try { userFacade.Logout(email);
+
+
+                    Response response = new Response();
+                    return JsonSerializer.Serialize(response);
+
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    Response response = new Response(ex.Message);
+                    return JsonSerializer.Serialize(response);
+                }
+            }
+
             /// <summary>
             /// 
             /// </summary>
@@ -71,4 +107,5 @@ using IntroSE.Kanban.Backend.ServiceLayer.Response;
 
         }
     }
+}
 
