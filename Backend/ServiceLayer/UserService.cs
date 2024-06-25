@@ -5,13 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IntroSE.Kanban.Backend.ServiceLayer;
 using System.Text.Json;
-
-
-
-
-
-
-
+using kanban.Backend.Business;
 
 namespace IntroSE.Kanban.Backend.ServiceLayer
 {
@@ -19,7 +13,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
     /*
      * ErrorMessage:string
      * ReturnValue:object
-     * }
+     * 
      * */
    public class UserService
     {
@@ -39,9 +33,12 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <param name="email">the email the user is using </param>
         /// <param name="password">the password the user is using </param>
         /// <returns></returns>
-        public string Register(string email, string password) {
-            
-            try { userFacade.Register(email, password);
+        public string Register(string email, string password)
+        {
+
+            try
+            {
+                userFacade.Register(email, password);
                 Response response = new Response();
                 return JsonSerializer.Serialize(response);
 
@@ -49,13 +46,15 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
 
 
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 Response response = new Response(ex.Message);
                 return JsonSerializer.Serialize(response);
 
-        
+
 
             }
+        }
 
 
             /// <summary>
@@ -108,7 +107,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
             /// <returns></returns>
 
 
-        }
+        
     }
 }
 
