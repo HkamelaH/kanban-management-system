@@ -4,11 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-
-
-
-namespace kanban.Backend.Service
+namespace IntroSE.Kanban.Backend.ServiceLayer
 
 {
     public class Response

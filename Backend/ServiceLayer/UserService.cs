@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntroSE.Kanban.Backend.ServiceLayer;
+using System.Text.Json;
 
 
 
@@ -10,7 +12,8 @@ using System.Threading.Tasks;
 
 
 
-namespace kanban.Backend.Service
+
+namespace IntroSE.Kanban.Backend.ServiceLayer
 {
 
     /*
