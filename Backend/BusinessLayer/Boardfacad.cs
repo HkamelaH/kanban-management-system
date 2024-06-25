@@ -331,4 +331,327 @@ public class Boardfacad
         log.Warn("attempt to get a column's tasks using a non valid boardname ");
         throw new Exception($"no such boardname!");
     }
+    public List<Task> PlayingTasks(string email)
+    {
+        if (!SignedUser.IsRegistered(email))
+        {
+            log.Warn("Email is not found");
+            throw new Exception("Email is not found");
+        }
+
+        // Check if the user is logged in
+        if (!SignedUser.IsLoggedIn(email))
+        {
+            log.Warn("Attempt to list InProgress tasks from offline user");
+            throw new Exception("User is not logged in!");
+        }
+        List<Task> Tmp = new List<Task>();
+        if (User_Board[email].Count < 1)
+        {
+            log.Warn("No board found for the user");
+            throw new Exception("No board found");
+        }
+        List<Board> boards = User_Board[email];
+        foreach (Board board in boards)
+        {
+            List<Task> InProgtemp = board.In_progressTasks();
+            foreach (Task task in InProgtemp)
+            {
+                Tmp.Add(task);
+            }
+        }
+        return Tmp;
+    }
+
+    public void AddTask(string email, string boardname, string Title, string description, DateTime duedate)
+    {
+        if (!userController.IsRegestered(email))
+        {
+            log.Warn("not registered email");
+            throw new Exception("User is not registered");
+        }
+        if (!userController.isLoggedin_user(email))
+        {
+            log.Warn("attempt to add a task to an offline user");
+            throw new Exception("User is not logged in!");
+        }
+        if (!User_Board.ContainsKey(email))
+        {
+            log.Warn("the user has no boards");
+            throw new Exception("the user has no boards");
+        }
+        if (!Check_Description(description))
+        {
+            log.Warn("invalid description");
+            throw new Exception("invalid description");
+        }
+        if (!Check_Title(Title))
+        {
+            log.Warn("invalid Title");
+            throw new Exception("invalid Title");
+        }
+        if (!Check_Date(duedate))
+        {
+            log.Warn("invalid duedate");
+            throw new Exception("invalid duedate");
+        }
+        if (User_Board.ContainsKey(email))
+        {
+            List<Board> boards = User_Board[email];
+            foreach (Board board in boards)
+            {
+                if (board.getboardname().Equals(boardname))
+                {
+                    Column column = board.getCol(0);
+                    column.AddTask(email, Title, description, duedate, CountTasks);
+                    Task newtask = new Task(CountTasks, duedate, Title, description, email, boardname);
+                    mytasks.Add(CountTasks, newtask);
+                    myIds.Add(newtask, CountTasks);
+                    CountTasks = CountTasks + 1;
+                    log.Info("Task added to the board successfully");
+                    return;
+                }
+            }
+            log.Warn("Board name is not in the dictionary");
+            throw new Exception("Board does not exsist");
+        }
+        log.Warn("the user is not registered");
+        throw new Exception("user not Registered");
+    }
+
+    public void ChangeTaskPlace(string email, string boardname, int Ordinal, int taskid)
+    {
+        check_Status(Ordinal); /// IMPLEMENT THE HElPING FUNCTION 
+        if (!userController.IsRegestered(email))
+        {
+            log.Warn("attempt to move a task to an unregistered user");
+            throw new Exception("User is not registered");
+        }
+        if (!userController.isLoggedin_user(email))
+        {
+            log.Warn("attempt to move a task to an offline user");
+            throw new Exception("User is not logged in!");
+        }
+        if (boardname is null)
+        {
+            log.Warn("Invalid Boardname");
+            throw new Exception("Invalid Boardname");
+        }
+        if (Ordinal == 2)
+        {
+            log.Warn("Can't advance from done");
+            throw new Exception("Can't advance");
+        }
+        if (!User_Board.ContainsKey(email))
+        {
+            log.Warn("No Boards");
+            throw new Exception("No Boards");
+        }
+        List<Board> boards = User_Board[email];
+        foreach (Board board in boards)
+        {
+            if (board.getboardname().Equals(boardname))
+            {
+                Column column = board.getCol(Ordinal);
+                List<Task> tasks = column.x();
+                foreach (Task task in tasks)
+                {
+                    if (task.getid() == taskid)
+                    {
+                        Column col = getcolumn(boardname, Ordinal);
+                        if (Ordinal == 0) col = board.getCol(1);
+                        if (Ordinal == 1) col = board.getCol(2);
+                        List<Task> thenextlevel = col.List_Of_Tasks();
+                        if (thenextlevel.Count == col.getlim())
+                        {
+                            log.Warn("Maximum tasks");
+                            throw new Exception("Maximum tasks");
+                        }
+                        else
+                        {
+
+                            board.getCol(Ordinal).List_Of_Tasks().Remove(task);
+
+                            board.getCol(Ordinal + 1).List_Of_Tasks().Add(task);
+                            log.Info("Task advanced successfully");
+                            return;
+                        }
+                    }
+                }
+                log.Warn("TaskID does not existe");
+                throw new Exception("No taskId");
+            }
+        }
+        log.Warn("Board name is not found");
+        throw new Exception("No similar board name");
+    }
+    public void ChangeTaskTitle(string email, string boardname, int Ordinal, int taskid, string newTitle)
+    {
+        check_Status(Ordinal);
+        if (!userController.IsRegestered(email))
+        {
+            log.Warn("attempt to move a task to an unregistered user");
+            throw new Exception("User is not registered");
+        }
+        if (!userController.isLoggedin_user(email))
+        {
+            log.Warn("attempt to move a task to an offline user");
+            throw new Exception("User is not logged in!");
+        }
+        if (Check_Title(newTitle))
+        {
+            if (User_Board.ContainsKey(email))
+            {
+                1
+                List<Board> boards = User_Board[email];
+                foreach (Board board in boards)
+                {
+                    if (board.getboardname().Equals(boardname))
+                    {
+                        Column column = board.getCol(Ordinal);
+                        List<Task> tasks = column.List_Of_Tasks();
+                        foreach (Task task in tasks)
+                        {
+                            if (task.getid() == (taskid))
+                            {
+                                if (Ordinal != 2)
+                                {
+                                    task.setTitle(newTitle);
+                                    log.Info("The title updated succesfully");
+                                    return;
+                                }
+                                else
+                                {
+                                    log.Warn("Should not be changed");
+                                    throw new Exception("Task already done");
+                                }
+                            }
+                        }
+                        log.Warn("Task id does not existed");
+                        throw new Exception("Task does not existed");
+                    }
+                }
+                log.Warn("Board name is not ");
+                throw new Exception("Board does not exsist");
+            }
+            log.Warn("The user is not registered");
+            throw new Exception("User is not Registered");
+        }
+    }
+
+    public void UpdateTaskDescription(string email, string boardname, int Ordinal, int taskid, string newDescription)
+    {
+        check_Status(Ordinal);
+        if (!userController.IsRegestered(email))
+        {
+            log.Warn("attempt to move a task to an unregistered user");
+            throw new Exception("User is not registered");
+        }
+        if (!userController.isLoggedin_user(email))
+        {
+            log.Warn("attempt to move a task to an offline user");
+            throw new Exception("User is not logged in!");
+        }
+        if (Check_Description(newDescription))
+        {
+            if (User_Board.ContainsKey(email))
+            {
+                List<Board> boards = User_Board[email];
+                foreach (Board board in boards)
+                {
+                    if (board.getboardname().Equals(boardname))
+                    {
+                        Column column = board.getCol(Ordinal);
+                        List<Task> tasks = column.List_Of_Tasks();
+                        foreach (Task task in tasks)
+                        {
+                            if (task.getid() == (taskid))
+                            {
+                                if (Ordinal != 2)
+                                {
+                                    task.setdescription(newDescription);
+                                    log.Info("task title description successfully");
+                                    return;
+                                }
+                                else
+                                {
+                                    log.Warn("task is done should not be changed");
+                                    throw new Exception("cant change a task that is done");
+                                }
+                            }
+                        }
+                        log.Warn("task id does not exsist");
+                        throw new Exception("task does not exsist");
+                    }
+                }
+                log.Warn("Board name is not in the dictionary");
+                throw new Exception("Board does not exsist");
+            }
+            log.Warn("the user is not registered");
+            throw new Exception("user not Registered");
+        }
+    }
+    public void UpdateTaskDateDue(string email, string boardname, int Ordinal, int taskid, DateTime newDate)
+    {
+        check_Status(Ordinal);
+        if (!userController.IsRegestered(email))
+        {
+            log.Warn("attempt to update a task dueDate to an unexisted email");
+            throw new Exception("email is not found");
+        }
+        if (!userController.isLoggedin_user(email))
+        {
+            log.Warn("attempt to update a task duoDate to an offline user");
+            throw new Exception("User is not logged in!");
+        }
+        if (Check_Date(newDate))
+        {
+            if (User_Board.ContainsKey(email))
+            {
+                List<Board> boards = User_Board[email];
+                foreach (Board board in boards)
+                {
+                    if (board.getboardname().Equals(boardname))
+                    {
+                        Column column = board.getCol(Ordinal);
+                        List<Task> tasks = column.List_Of_Tasks();
+                        foreach (Task task in tasks)
+                        {
+                            if (task.getid() == (taskid))
+                            {
+                                if (Ordinal != 2)
+                                {
+                                    task.setDuedate(newDate);
+                                    log.Info("task dueDate updated successfully");
+                                    return;
+                                }
+                                else
+                                {
+                                    log.Warn("Task is done should not be changed");
+                                    throw new Exception("cant change a task that is done");
+                                }
+                            }
+                        }
+                        log.Warn("Task id does not exsist");
+                        throw new Exception("Task does not exsist");
+                    }
+                }
+                log.Warn("Board name is not in the dictionary");
+                throw new Exception("Board does not exsist");
+            }
+            log.Warn("The user is not registered");
+            throw new Exception("User is  not Registered");
+        }
+    }
+
+    private void check_Status(int columnOrdinal)
+    {
+        if (columnOrdinal < 0 || columnOrdinal > 2)
+        {
+            throw new Exception("Invalid column ordinal!");
+        }
+    }
+
+
+
 
