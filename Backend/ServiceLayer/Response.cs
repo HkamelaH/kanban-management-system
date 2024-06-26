@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using kanban.Backend.Business;
 using IntroSE.Kanban.Backend.ServiceLayer;
 
-namespace IntroSE.Kanban.Backend.ServiceLayer
+namespace BGU_SE_Courses.Kanban.Backend.ServiceLayer
 
 {
     public class Response
@@ -14,11 +14,11 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         public string? ErrorMessage { get; set; }
         public string? ReturnValue { get; set; }
         public Response() { }
-        public Response(string errorMessage)
+        public Response(object errorMessage)
         {
             ErrorMessage = errorMessage;
         }
-        public Response(string errorMessage, string returnValue)
+        public Response(object errorMessage, object returnValue)
         {
             ErrorMessage = errorMessage;
             ReturnValue = returnValue;

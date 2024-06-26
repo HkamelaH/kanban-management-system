@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntroSE.Kanban.Backend.BussinessLayer.Board
+namespace BGU_SE_Courses.Kanban.Backend.BussinessLayer.Board
 
 {
     public class Task

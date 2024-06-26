@@ -7,7 +7,7 @@ using IntroSE.Kanban.Backend.ServiceLayer;
 using System.Text.Json;
 using kanban.Backend.Business;
 
-namespace IntroSE.Kanban.Backend.ServiceLayer
+namespace BGU_SE_Courses.Kanban.Backend.ServiceLayer
 {
 
     /*
