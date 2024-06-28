@@ -7,8 +7,10 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using static log4net.Appender.RollingFileAppender;
-using IntroSE.Kanban.Backend.ServiceLayer
+using log4net;
+using log4net.Appender; // Import the entire Appender namespace
+using IntroSE.Kanban.Backend.ServiceLayer;
+using IntroSE.Forum.Backend.ServiceLayer;
 
 namespace BackendTests
 {
@@ -42,15 +44,15 @@ namespace BackendTests
         {
 
             //should be successfull 
-            string Toadd1 = boardService.AddTask("badrah@post.bgu.ac.il", "ahmad", "university", "Party all day everyday", new DateTime(2024, 6, 26));
+            string Toadd1 = boardService.AddTask("badrah@post.bgu.ac.il", "ahmad", "university", "Party all day everyday", new DateTime(2023, 8, 20));
             Response response1 = JsonSerializer.Deserialize<Response>(Toadd1);
             Console.WriteLine(response1.ErrorMessage);
             ////empty title 
-            string Toadd2 = boardService.AddTask("badrah@post.bgu.ac.il", "ahmad", "jaja", "Party all day everyday", new DateTime(2024, 6, 26));
+            string Toadd2 = boardService.AddTask("badrah@post.bgu.ac.il", "ahmad", "jaja", "Party all day everyday", new DateTime(2023, 8, 20));
             Response response2 = JsonSerializer.Deserialize<Response>(Toadd2);
             Console.WriteLine(response2.ErrorMessage);
             ////more than 50 charcteres in the title 
-            string Toadd3 = boardService.AddTask("badrah@post.bgu.ac.il", "ahmad", "university111", "Party all day everyday", new DateTime(2024, 6, 26));
+            string Toadd3 = boardService.AddTask("badrah@post.bgu.ac.il", "ahmad", "university111", "Party all day everyday", new DateTime(2023, 8, 20));
             Response response3 = JsonSerializer.Deserialize<Response>(Toadd3);
             Console.WriteLine(response3.ErrorMessage);
             ////more than 300 charcteres in the description 
@@ -58,11 +60,11 @@ namespace BackendTests
             Response response4 = JsonSerializer.Deserialize<Response>(Toadd4);
             Console.WriteLine(response4.ErrorMessage);
             ////not in time 
-            string Toadd5 = boardService.AddTask("badrah@post.bgu.ac.il", "entering the university", "university", "Party all day everyday", new DateTime(2010, 7, 20));
+            string Toadd5 = boardService.AddTask("badrah@post.bgu.ac.il", "entering the university", "university", "Party all day everyday", new DateTime(2020, 4, 20));
             Response response5 = JsonSerializer.Deserialize<Response>(Toadd5);
             Console.WriteLine(response5.ErrorMessage);
             ////without description 
-            string Toadd6 = boardService.AddTask("badrah@post.bgu.ac.il", "entering the university", "university", "", new DateTime(2024, 6, 26));
+            string Toadd6 = boardService.AddTask("badrah@post.bgu.ac.il", "entering the university", "university", "", new DateTime(2023, 4, 20));
             Response response6 = JsonSerializer.Deserialize<Response>(Toadd6);
             Console.WriteLine(response6.ErrorMessage);
         }
@@ -75,15 +77,15 @@ namespace BackendTests
         public void UpdateTaskDueDateTest()
         {
             //successfully update
-            string ToUpdate1 = boardService.UpdateTaskDueDate("badrah@post.bgu.ac.il", "university", 10, 2, new DateTime(2024, 4, 25));
+            string ToUpdate1 = boardService.UpdateTaskDateDue("badrah@post.bgu.ac.il", "university", 10, 2, new DateTime(2023, 4, 25));
             Response response1 = JsonSerializer.Deserialize<Response>(ToUpdate1);
             Console.WriteLine(response1.ErrorMessage);
             //already done
-            string ToUpdate2 = boardService.UpdateTaskDueDate("badrah@post.bgu.ac.il", "university", 10, 2, new DateTime(2024, 4, 25));
+            string ToUpdate2 = boardService.UpdateTaskDateDue("badrah@post.bgu.ac.il", "university", 10, 2, new DateTime(2023, 4, 25));
             Response response2 = JsonSerializer.Deserialize<Response>(ToUpdate2);
             Console.WriteLine(response2.ErrorMessage);
             //time expired
-            string ToUpdate3 = boardService.UpdateTaskDueDate("badrah@post.bgu.ac.il", "university", 10, 2, new DateTime(2010, 7, 20));
+            string ToUpdate3 = boardService.UpdateTaskDateDue("badrah@post.bgu.ac.il", "university", 10, 2, new DateTime(2020, 4, 25));
             Response response3 = JsonSerializer.Deserialize<Response>(ToUpdate3);
             Console.WriteLine(response3.ErrorMessage);
         }
@@ -96,19 +98,19 @@ namespace BackendTests
         public void UpdateTaskTitleTest()
         {
             //successfully updated
-            string ToUpdate1 = boardService.UpdateTaskTitle("badrah@post.bgu.ac.il", "microsoft", 10, 2, "work");
+            string ToUpdate1 = boardService.ChangeTaskTitle("badrah@post.bgu.ac.il", "microsoft", 10, 2, "work");
             Response response1 = JsonSerializer.Deserialize<Response>(ToUpdate1);
             Console.WriteLine(response1.ErrorMessage);
             //already done
-            string ToUpdate2 = boardService.UpdateTaskTitle("badrah@post.bgu.ac.il", "microsoft", 10, 2, "work");
+            string ToUpdate2 = boardService.ChangeTaskTitle("badrah@post.bgu.ac.il", "microsoft", 10, 2, "work");
             Response response2 = JsonSerializer.Deserialize<Response>(ToUpdate2);
             Console.WriteLine(response2.ErrorMessage);
             //empty title
-            string ToUpdate3 = boardService.UpdateTaskTitle("badrah@post.bgu.ac.il", "microsoft", 10, 2, "");
+            string ToUpdate3 = boardService.ChangeTaskTitle("badrah@post.bgu.ac.il", "microsoft", 10, 2, "");
             Response response3 = JsonSerializer.Deserialize<Response>(ToUpdate3);
             Console.WriteLine(response3.ErrorMessage);
             //title longer than 50 char's
-            string ToUpdate4 = boardService.UpdateTaskTitle("badrah@post.bgu.ac.il", "microsoft", 10, 2, "workworkworkworkworkworkworkworkworkworkworkworkworkworkworkworkworkworkworkworkwork");
+            string ToUpdate4 = boardService.ChangeTaskTitle("badrah@post.bgu.ac.il", "microsoft", 10, 2, "workworkworkworkworkworkworkworkworkworkworkworkworkworkworkworkworkworkworkworkwork");
             Response response4 = JsonSerializer.Deserialize<Response>(ToUpdate4);
             Console.WriteLine(response4.ErrorMessage);
         }
@@ -123,21 +125,22 @@ namespace BackendTests
         public void UpdateTaskDescription()
         {
             //successfully updated
-            string ToUpdate1 = boardService.UpdateTaskDescription("badrah@post.bgu.ac.il", "kingdom villiage", 100, 1, "wealth");
+            string ToUpdate1 = boardService.ChangeTaskDescription("badrah@post.bgu.ac.il", "kingdom villiage", 100, 1, "wealth");
             Response response1 = JsonSerializer.Deserialize<Response>(ToUpdate1);
             Console.WriteLine(response1.ErrorMessage);
             //already done
-            string ToUpdate2 = boardService.UpdateTaskDescription("badrah@post.bgu.ac.il", "kingdom villiage", 100, 1, "wealth");
+            string ToUpdate2 = boardService.ChangeTaskDescription("badrah@post.bgu.ac.il", "kingdom villiage", 100, 1, "wealth");
             Response response2 = JsonSerializer.Deserialize<Response>(ToUpdate2);
             Console.WriteLine(response2.ErrorMessage);
             //more than 300 chars in description
-            string ToUpdate3 = boardService.UpdateTaskDescription("badrah@post.bgu.ac.il", "kingdom villiage", 100, 1, "wealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealth");
+            string ToUpdate3 = boardService.ChangeTaskDescription("badrah@post.bgu.ac.il", "kingdom villiage", 100, 1, "wealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealthwealth");
             Response response3 = JsonSerializer.Deserialize<Response>(ToUpdate3);
             Console.WriteLine(response3.ErrorMessage);
             //empty description
-            string ToUpdate4 = boardService.UpdateTaskDescription("badrah@post.bgu.ac.il", "kingdom villiage", 100, 1, "");
+            string ToUpdate4 = boardService.ChangeTaskDescription("badrah@post.bgu.ac.il", "kingdom villiage", 100, 1, "");
             Response response4 = JsonSerializer.Deserialize<Response>(ToUpdate4);
-            Console.WriteLine(response4.ErrorMessage)
+            Console.WriteLine(response4.ErrorMessage);
         }
+
     }
 }

@@ -14,10 +14,10 @@ namespace BackendTests
     internal class BoardTests
     {
         private BoardService boardService;
-  
+        //private UserService userService;
         public BoardTests(BoardService boardService)
         {
-          
+
             this.boardService = boardService;
         }
         public void MainTests()
@@ -37,7 +37,7 @@ namespace BackendTests
         public void AddBoardTest()
         {
             //should be added
-            string json = boardService.AddBoard("essabsh@post.bgu.ac.il", "essa");
+            string json = boardService.CreateBoard("kamle@post.bgu.ac.il", "kamle");
             Response response = JsonSerializer.Deserialize<Response>(json);
             Console.WriteLine(response.ErrorMessage);
 
@@ -62,17 +62,17 @@ namespace BackendTests
         public void ColumnLimitTest()
         {
             //should be added
-            string json = boardService.LimitColumn("kamle@post.bgu.ac.il", "kamle", 1, 100);
+            string json = boardService.LimitTheColumn("kamle@post.bgu.ac.il", "kamle", 1, 100);
             Response response = JsonSerializer.Deserialize<Response>(json);
             Console.WriteLine(response.ErrorMessage);
 
             //should be added
-            string json1 = boardService.LimitColumn("kamle@post.bgu.ac.il", "kamle", 2, 100);
+            string json1 = boardService.LimitTheColumn("kamle@post.bgu.ac.il", "kamle", 2, 100);
             Response response1 = JsonSerializer.Deserialize<Response>(json1);
             Console.WriteLine(response1.ErrorMessage);
 
             //should be added
-            string json2 = boardService.LimitColumn("kamle@post.bgu.ac.il", "kamle", 3, 100);
+            string json2 = boardService.LimitTheColumn("kamle@post.bgu.ac.il", "kamle", 3, 100);
             Response response2 = JsonSerializer.Deserialize<Response>(json2);
             Console.WriteLine(response2.ErrorMessage);
         }
@@ -82,15 +82,15 @@ namespace BackendTests
         //<example> for json the column limit should be returned successfully<example>
         public void GetColumnLimitTest()
         {
-            string json = boardService.GetColumnLimit("kamle@post.bgu.ac.il", "kamle", 0);
+            string json = boardService.GetTheColumnLimit("kamle@post.bgu.ac.il", "kamle", 0);
             Response response = JsonSerializer.Deserialize<Response>(json);
             Console.WriteLine(response.ErrorMessage);
 
-            string json1 = boardService.GetColumnLimit("ahmad@gmail.com", "ahmad", 0);
+            string json1 = boardService.GetTheColumnLimit("ahmad@gmail.com", "ahmad", 0);
             Response response1 = JsonSerializer.Deserialize<Response>(json1);
             Console.WriteLine(response1.ErrorMessage);
 
-            string json2 = boardService.GetColumnLimit("ghadeer@gmail.com", "ghadeer", 0);
+            string json2 = boardService.GetTheColumnLimit("ghadeer@gmail.com", "ghadeer", 0);
             Response response2 = JsonSerializer.Deserialize<Response>(json2);
             Console.WriteLine(response2.ErrorMessage);
         }
@@ -104,11 +104,11 @@ namespace BackendTests
             Response response = JsonSerializer.Deserialize<Response>(json);
             Console.WriteLine(response.ErrorMessage);
 
-            string json1 = boardService.GetColumnLimit("ahmad@gmail.com", "ahmad", 0);
+            string json1 = boardService.GetColumnName("ahmad@gmail.com", "ahmad", 0);
             Response response1 = JsonSerializer.Deserialize<Response>(json1);
             Console.WriteLine(response1.ErrorMessage);
 
-            string json2 = boardService.GetColumnLimit("ghadeer@gmail.com", "ghadeer", 0);
+            string json2 = boardService.GetColumnName("ghadeer@gmail.com", "ghadeer", 0);
             Response response2 = JsonSerializer.Deserialize<Response>(json2);
             Console.WriteLine(response2.ErrorMessage);
 
@@ -129,7 +129,7 @@ namespace BackendTests
         // <example> for json the function should print Board removed successfully</example>
         public void RemoveBoardTest()
         {
-            string json = boardService.RemoveBoard("kamle@post.bgu.ac.il", "kamle");
+            string json = boardService.DeleteBoard("kamle@post.bgu.ac.il", "kamle");
             Response response = JsonSerializer.Deserialize<Response>(json);
             Console.WriteLine(response.ErrorMessage);
         }
@@ -141,11 +141,11 @@ namespace BackendTests
         public void InProgressTest()
         {
             //--------------------
-            string json = boardService.AddBoard("kamle@post.bgu.ac.il", "kamle");
+            string json = boardService.CreateBoard("kamle@post.bgu.ac.il", "kamle");
             Response response = JsonSerializer.Deserialize<Response>(json);
             Console.WriteLine(response.ErrorMessage);
             //----------------------
-            string json1 = boardService.InProgressTasks("kamle@post.bgu.ac.il");
+            string json1 = boardService.ProTasks("kamle@post.bgu.ac.il");
             Response response2 = JsonSerializer.Deserialize<Response>(json1);
             Console.WriteLine(response2.ErrorMessage);
         }
@@ -156,7 +156,7 @@ namespace BackendTests
 
         public void AdvanceTaskTest()
         {
-            string json = boardService.AdvanceTask("kamle@post.bgu.ac.il", "kamle", 0, 1);
+            string json = boardService.ChangeTaskPlace("kamle@post.bgu.ac.il", "kamle", 0, 1);
             Response response = JsonSerializer.Deserialize<Response>(json);
             Console.WriteLine(response.ErrorMessage);
         }
