@@ -2,115 +2,101 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using IntroSE.Kanban.Backend.ServiceLayer;
 using System.Text.Json;
-using kanban.Backend.Business;
+using log4net;
+using log4net.Config;
+using System.Threading.Tasks;
+using IntroSE.Kanban.Backend.BusinessLayer;
+using System.Text.Json.Serialization;
+using IntroSE.Forum.Backend.ServiceLayer;
+using IntroSE.Kanban.Backend.BusinessLayer.User;
 
-namespace BGU_SE_Courses.Kanban.Backend.ServiceLayer
+namespace IntroSE.Kanban.Backend.ServiceLayer
 {
-    
-
-
-    /*
-     * ErrorMessage:string
-     * ReturnValue:object
-     * 
-     * */
-   public class UserService
+    public class UserService
     {
-       
-       
-
-       private UserFacade userFacade;
-        public UserService()
+        private readonly UserFacad userFacad;
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public UserService(UserFacad userFacad)
         {
-            this.userFacade = new UserFacade();
-            
+            this.userFacad = userFacad;
+            // Load configuration
+        }
 
+        // <summary>
+        /// This method registers a new user to the system.
+        /// </summary>
+        /// <param name="email">The user email address, used as the username for logging the system.</param>
+        /// <param name="password">The user password.</param>
+        /// <returns>The string "{}", unless an error occurs (see <see cref="GradingService"/>)</returns>
+        public string Register(string email, string password)
+        {
+            Response response;
+            {
+                try
+                {
+                    userFacad.Register(email, password);
+                    response = new Response();
+                    return JsonSerializer.Serialize(response);
+
+                }
+                catch (Exception e)
+                {
+                    response = new Response(e.Message, null);
+                    return JsonSerializer.Serialize(response);
+                }
+            }
+        }
+        /// <summary>
+        ///  This method logs in an existing user.
+        /// </summary>
+        /// <param name="email">The email address of the user to login</param>
+        /// <param name="password">The password of the user to login</param>
+        /// <returns>Response with user email, unless an error occurs (see <see cref="GradingService"/>)</returns>
+        public string Login(string email, string password)
+        {
+            Response response;
+            {
+                try
+                {
+                    userFacad.Login(email, password);
+                    response = new Response(null, email);
+                    return JsonSerializer.Serialize(response);
+
+                }
+                catch (Exception e)
+                {
+                    response = new Response(e.Message, null);
+                    return JsonSerializer.Serialize(response);
+                }
+            }
         }
 
         /// <summary>
-        /// the function registers a new user .
+        /// This method logs out a logged in user. 
         /// </summary>
-        /// <param name="email">the email the user is using </param>
-        /// <param name="password">the password the user is using </param>
-        /// <returns></returns>
-        public string Register(string email, string password)
+        /// <param name="email">The email of the user to log out</param>
+        /// <returns>empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
+        public string Logout(string email)
         {
-
+            Response response;
             try
             {
-                userFacade.Register(email, password);
-                Response response = new Response();
+                userFacad.Logout(email);
+                response = new Response();
                 return JsonSerializer.Serialize(response);
-
-
-
 
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Response response = new Response(ex.Message);
+                response = new Response(e.Message, null);
                 return JsonSerializer.Serialize(response);
-
-
-
             }
         }
-
-
-            /// <summary>
-            /// this function allows the user to log in using his email and his password 
-            /// </summary>
-            /// <param name="email">this is the email that the user have </param>
-            /// <param name="password"this is the password the user is using ></param>
-            /// <returns></returns>
-            public string Login(string email, string password) { try { userFacade.Login(email, password);
-
-                    Response response = new Response();
-                    return JsonSerializer.Serialize(response);
-
-
-
-
-                }
-                catch (Exception ex) {
-                    Response response = new Response(ex.Message);
-                    return JsonSerializer.Serialize(response);
-                }
-            }
-
-
-            /// <summary>
-            /// this fun allows the user to logout
-            /// </summary>
-            /// <param name="email">this is the email the user is using</param>
-            /// <returns></returns>
-            public string Logout(string email) { try { userFacade.Logout(email);
-
-
-                    Response response = new Response();
-                    return JsonSerializer.Serialize(response);
-
-
-
-
-                }
-                catch (Exception ex)
-                {
-                    Response response = new Response(ex.Message);
-                    return JsonSerializer.Serialize(response);
-                }
-            }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
-
-
-        
     }
+
+
 }
+
+
 
