@@ -16,6 +16,7 @@ namespace IntroSE.Kanban.Backend.BusinessLayer.User
         public Dictionary<string, UserClass> users;
         private int counter;
 
+
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public UserFacad()
         {
