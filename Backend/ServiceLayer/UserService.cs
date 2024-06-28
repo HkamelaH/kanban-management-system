@@ -9,6 +9,7 @@ using kanban.Backend.Business;
 
 namespace IntroSE.Kanban.Backend.ServiceLayer
 {
+    
 
     /*
      * ErrorMessage:string
@@ -24,6 +25,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         public UserService()
         {
             this.userFacade = new UserFacade();
+            
 
         }
 

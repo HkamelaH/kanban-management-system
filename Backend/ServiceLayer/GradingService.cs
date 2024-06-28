@@ -49,10 +49,14 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
     /// </summary>
     public class GradingService
     {
-
+        private UserService userService;
+        private readonly BoardService boardService;
         public GradingService()
         {
-            throw new NotImplementedException();
+            UserFacad UserFacad1 = new UserFacad();
+            BoardFacad boardFacad1 = new BoardFacad(UserFacad1);
+            userService = new UserService(UserFacad1);
+            boardService = new BoardService(boardFacad1);
         }
 
 
@@ -64,7 +68,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string Register(string email, string password)
         {
-            throw new NotImplementedException();
+            return userService.Register(email, password);
         }
 
 
@@ -76,7 +80,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>A response with the user's email, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string Login(string email, string password)
         {
-            throw new NotImplementedException();
+            return userService.Login(email, password);
         }
 
 
@@ -87,7 +91,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string Logout(string email)
         {
-            throw new NotImplementedException();
+            return userService.Logout(email);
         }
 
         /// <summary>
