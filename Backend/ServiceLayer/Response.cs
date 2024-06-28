@@ -17,6 +17,7 @@ namespace IntroSE.Forum.Backend.ServiceLayer
             ErrorMessage = msg;
             ReturnValue = null;
         }
+
         public Response(string msg, object returnValue)
         {
             ErrorMessage = msg;
