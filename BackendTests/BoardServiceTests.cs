@@ -141,7 +141,7 @@ namespace BackendTests
         public void InProgressTest()
         {
             //--------------------
-            string json = boardService.CreateBoard("kamle@post.bgu.ac.il", "kamle");
+            string json = boardService.ProTasks("kamle@post.bgu.ac.il", "kamle");
             Response response = JsonSerializer.Deserialize<Response>(json);
             Console.WriteLine(response.ErrorMessage);
             //----------------------
