@@ -18,6 +18,7 @@ namespace IntroSE.Kanban.Backend.BusinessLayer.User
 
         public UserClass(string email, string password, int id)
         {
+
             this.email = email;
             this.password = password;
             Id = id;
