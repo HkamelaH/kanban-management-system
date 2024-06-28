@@ -1,135 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Xml.Linq;
-using BGU_SE_Courses.Kanban.Backend.ServiceLayer;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using IntroSE.Kanban.Backend.BussinessLayer;
 
-namespace BGU_SE_Courses.Kanban.Backend.ServiceLayer
-
-public class Tasks
+namespace IntroSE.Kanban.Backend.ServiceLayer
 {
-    private readonly Boardfacad boardFacad;
-    private readonly UserFacad userfacad;
-    public Tasks(Boardfacad BoardFacad)
+    public class TaskToSend
     {
-        this.Boardfacad = boardFacad;
+        public int Id { get; set; }
+        public DateTime CreationTime { get; set; }
+        public string Title { get; set; }
 
+        public string Description { get; set; }
+        public DateTime DueDate { get; set; }
+
+        public TaskToSend() { }
+
+        public TaskToSend(BussinessLayer.Board.Task task)
+        {
+            this.Id = task.getid();
+            this.CreationTime = task.getcreationTime();
+            this.Title = task.gettitle();
+            this.Description = task.getdescription();
+            this.DueDate = task.getdueDate();
+        }
     }
-
-
-
-
-    public string PlayingTasks(string email)
-    {
-        Response response;
-
-        try
-        {
-            List<Task> inprogressTasks = Boardfacad.InProgessTasks(email);
-            Task[] tasksArray = inprogressTasks.ToArray();
-            response = new Response(null, tasksArray);
-            return JsonSerializer.Serialize(response);
-        }
-        catch (Exception e)
-        {
-            response = new Response(e.Message, null);
-            return JsonSerializer.Serialize(response);
-        }
-
-
-    }
-
-    public string ChangeTaskPlace(string email, string boardName, int columnOrdinal, int taskId)
-    {
-        Response response; 
-        try
-        {
-            Boardfacad.ChangeTaskPlace(email, boardName, columnOrdinal, taskId);
-            response = new Response();
-            return JsonSerializer.Serialize(response);
-        }
-        catch (Exception e)
-        {
-            response = new Response(e.Message, null);
-            return JsonSerializer.Serialize(response);
-        }
-
-    }
-
-
-    public string AddTask(string email, string boardName, string title, string description, DateTime dueDate)
-    {
-        Response response;
-        try
-        {
-            Boardfacad.AddTask(email, boardName, title, description, dueDate);
-            response = new Response();
-            return JsonSerializer.Serialize(response);
-        }
-        catch (Exception e)
-        {
-            response = new Response(e.Message, null);
-            return JsonSerializer.Serialize(response);
-        }
-        public string UpdateTaskDateDue(string email, string boardName, int columnOrdinal, int taskId, DateTime dueDate)
-        {
-            Response response;
-            try
-            {
-                Boardfacad.UpdateTaskDueDate(email, boardName, columnOrdinal, taskId, dueDate);
-                response = new Response();
-                return JsonSerializer.Serialize(response);
-            }
-            catch (Exception e)
-            {
-                response = new Response(e.Message, null);
-                return JsonSerializer.Serialize(response);
-            }
-
-        }
-
-        public string ChangeTaskTitle(string email, string boardName, int columnOrdinal, int taskId, string title)
-        {
-            Response response;
-            try
-            {
-                Boardfacad.UpdateTaskTitle(email, boardName, columnOrdinal, taskId, title);
-                response = new Response();
-                return JsonSerializer.Serialize(response);
-            }
-            catch (Exception e)
-            {
-                response = new Response(e.Message, null);
-                return JsonSerializer.Serialize(response);
-            }
-        }
-        public string ChangeTaskDescription(string email, string boardName, int columnOrdinal, int taskId, string description)
-        {
-            Response response 
-            try
-            {
-                Boardfacad.UpdateTaskTitle(email, boardName, columnOrdinal, taskId, title);
-                response = new Response();
-
-                return JsonSerializer.Serialize(response);
-            }
-            catch (Exception e)
-            {
-                response = new Response(e.Message, null);
-                return JsonSerializer.Serialize(response);
-            }
-        }
-
-
-
-    }
-
-
-
-
-
-
-
 }
