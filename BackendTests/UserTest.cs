@@ -96,7 +96,7 @@ namespace BackendTests
         //<summary>
         //For testing logout
         //<summary>
-        //<example> the funvtion should print logged out succesfully 
+        //<example> the funvtion should print logged out 
         public void LogoutTest()
         {
             string logout = userService.Logout("ghadeeerd@post.bgu.ac.il");
