@@ -9,7 +9,7 @@ namespace IntroSE.Kanban.Backend.BusinessLayer.User
     /// </summary>
     public class UserClass
     {
-        private string email;
+        private string emaiil;
         private string password;
         private int Id;
         private bool LoggedIn;
