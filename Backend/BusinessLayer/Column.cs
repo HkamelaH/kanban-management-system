@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IntroSE.Kanban.Backend.BussinessLayer.Board;
-//using IntroSE.Kanban.Backend.BussinessLayer.task;
+using BGU_SE_Courses.Kanban.Backend.BussinessLayer.Board;
+//using BGU_SE_Courses.Kanban.Backend.BussinessLayer.task;
 
 namespace IntroSE.Kanban.Backend.BussinessLayer.Board
 {

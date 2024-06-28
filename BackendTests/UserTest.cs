@@ -12,7 +12,7 @@ namespace BackendTests
 {
     internal class UserTest
     {
-        private readonly UserService userService;
+        private UserService userService;
 
         public UserTests(UserService userService)
         {

@@ -7,8 +7,8 @@ namespace Backend.ServiceLayer
     public class BoardService
     {
         private Dictionary<string, Board> boards;
-        private readonly BoardController boardController;
-        //private readonly UserController userController;
+        private readonly Boardfacad BoardUser;
+     
 
         public BoardService()
         {
@@ -50,9 +50,9 @@ namespace Backend.ServiceLayer
         }
     }
     
-    public BoardService(BoardController boardController)
+    public BoardService(Boardfacad BoardUser)
     {
-        this.boardController = boardController;
+        this.BoardUser = BoardUser;
 
     }
 
@@ -71,7 +71,7 @@ namespace Backend.ServiceLayer
             try
             {
                 int i = 0;
-                Task[] result = boardController.GetColumn(email, boardName, columnOrdinal);
+                Task[] result = BoardUser.GetColumn(email, boardName, columnOrdinal);
                 TaskToSend[] output = new TaskToSend[result.Length];
                 foreach (Task task in result)
                 {
@@ -105,7 +105,7 @@ namespace Backend.ServiceLayer
         {
             try
             {
-                boardController.CreateBoard(email, name);
+                BoardUser.CreateBoard(email, name);
                 response = new Response(null, null);
                 return JsonSerializer.Serialize(response);
             }
@@ -129,7 +129,7 @@ namespace Backend.ServiceLayer
         {
             try
             {
-                boardController.DeleteBoard(email, name);
+                BoardUser.DeleteBoard(email, name);
                 response = new Response();
                 return JsonSerializer.Serialize(response);
             }
@@ -154,7 +154,7 @@ namespace Backend.ServiceLayer
 
         try
         {
-            List<Task> inprogressTasks = boardController.ProTasks(email);
+            List<Task> inprogressTasks = BoardUser.ProTasks(email);
             Task[] tasksArray = inprogressTasks.ToArray();
             response = new Response(null, tasksArray);
             return JsonSerializer.Serialize(response);
@@ -180,7 +180,7 @@ namespace Backend.ServiceLayer
         Response response;
         try
         {
-            string result = boardController.GetColumnName(email, boardName, columnOrdinal);
+            string result = BoardUser.GetColumnName(email, boardName, columnOrdinal);
             response = new Response(result);
             return JsonSerializer.Serialize(response);
         }
@@ -205,7 +205,7 @@ namespace Backend.ServiceLayer
         Response response;
         try
         {
-            int limit = boardController.GetTheColumnLimit(email, boardName, columnOrdinal);
+            int limit = BoardUser.GetTheColumnLimit(email, boardName, columnOrdinal);
             response = new Response(null, limit);
             return JsonSerializer.Serialize(response);
         }
@@ -231,7 +231,7 @@ namespace Backend.ServiceLayer
         Response response;
         try
         {
-            boardController.LimitTheColumn(email, boardName, columnOrdinal, limit);
+            BoardUser.LimitTheColumn(email, boardName, columnOrdinal, limit);
             response = new Response();
             return JsonSerializer.Serialize(response);
         }
@@ -264,7 +264,7 @@ namespace Backend.ServiceLayer
         Response response;
         try
         {
-            boardController.AddTask(email, boardName, title, description, dueDate);
+            BoardUser.AddTask(email, boardName, title, description, dueDate);
             response = new Response();
             return JsonSerializer.Serialize(response);
         }
@@ -290,7 +290,7 @@ namespace Backend.ServiceLayer
         Response response;
         try
         {
-            boardController.UpdateTaskDueDate(email, boardName, columnOrdinal, taskId, dueDate);
+            BoardUser.UpdateTaskDueDate(email, boardName, columnOrdinal, taskId, dueDate);
             response = new Response();
             return JsonSerializer.Serialize(response);
         }
@@ -316,7 +316,7 @@ namespace Backend.ServiceLayer
         Response response;
         try
         {
-            boardController.UpdateTaskTitle(email, boardName, columnOrdinal, taskId, title);
+            BoardUser.UpdateTaskTitle(email, boardName, columnOrdinal, taskId, title);
             response = new Response();
             return JsonSerializer.Serialize(response);
         }
@@ -342,7 +342,7 @@ namespace Backend.ServiceLayer
         Response response;
         try
         {
-            boardController.UpdateTaskDescription(email, boardName, columnOrdinal, taskId, description);
+            BoardUser.UpdateTaskDescription(email, boardName, columnOrdinal, taskId, description);
             response = new Response();
             return JsonSerializer.Serialize(response);
         }

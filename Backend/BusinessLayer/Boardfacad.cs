@@ -1,4 +1,4 @@
-﻿using IntroSE.Kanban.Backend.BusinessLayer.User;
+﻿using BGU_SE_Courses.Kanban.Backend.BusinessLayer.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-//using IntroSE.Kanban.Backend.BussinessLayer.task;
+//using BGU_SE_Courses.Kanban.Backend.BussinessLayer.task;
+
+
+
 
 
 namespace IntroSE.Kanban.Backend.BussinessLayer.Board
@@ -17,51 +20,51 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
 public class Boardfacad
 {
     private Dictionary<string, List<Board>> User_Board;
- /// board   private Dictionary<string, bool> User_status; 
- /// private int CountBoards; this is for Boards
+    private Dictionary<string, bool> User_status; 
+    private int CountBoards;
     private int CountTasks;
     private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-    private readonly UserFacad userFacad; /// Gader's implementaion
+    private readonly UserFacad user; 
     private Dictionary<int, Task> mytasks;
-  ///  private Dictionary<Task, int> Ids; this is used for the board 
+    private Dictionary<Task, int> Ids;
 
 
     public Boardfacad(UserFacad SignedUser)
 	{
         this.SignedUser = SignedUser;
-        ///this.CountBoards = 0;
+        this.CountBoards = 0;
         this.User_Board = new Dictionary<string, List<Board>>();
         this.User_status = new Dictionary<string, bool>();
         this.CountTasks = 1;
         this.mytasks = new Dictionary<int, Task>();
-        /// this.Ids = new Dictionary<Task, int>();
+         this.Ids = new Dictionary<Task, int>();
 
     }
 
-    public void CreatBoard(string email, string BoardName)
+    public void CreateBoard(string email, string BoardName)
     {
-        if (string.IsNullOrWhiteSpace(BoardName)) /// check if the board name is null 
+        if (string.IsNullOrWhiteSpace(BoardName)) 
         {
             throw new Exception("not valid input");
         }
-        if (!userController.IsRegestered(email))
+        if (!user.IsRegestered(email))
         {
             log.Warn("trying to add a board to an non existing Email");
             throw new Exception("Email not existed!");
         }
-        if (!userController.isLoggedin_user(email))
+        if (!loggedIn.ContainsKey(user.email))
         {
             log.Warn("offline user");
             throw new Exception("User is offline!");
         }
-        Console.WriteLine("am here");
+       
         if (User_Board.ContainsKey(email))
         {
             List<Board> boards = User_Board[email];
-            Console.WriteLine("am here2");
+           
             foreach (Board b in boards)
             {
-                if (b.getboardname().Equals(BoardName))
+                if (b.GetBoardName().Equals(BoardName))
                 {
                     log.Warn("the board name taken for this user");
                     throw new Exception("The input name for board already taken!");
@@ -73,7 +76,6 @@ public class Boardfacad
         }
         else
         {
-            Console.WriteLine("am here3");
             log.Info("added a new board");
             Board board2 = new Board(email, BoardName, CountBoards);
             List<Board> boardss = new List<Board>();
@@ -92,18 +94,18 @@ public class Boardfacad
     /// <exception cref="Exception">if the user not online </exception>
     /// <exception cref="Exception">if the board does not exsist</exception>
     /// <return> this function does not return anything</return>
-    public void DeleteeBoard(string email, string boardname)
+    public void DeleteBoard(string email, string boardname)
     {
         if (string.IsNullOrWhiteSpace(BoardName)) /// check if the board name is null 
         {
             throw new Exception("not valid input");
         }
-        if (!userController.IsRegestered(email))
+        if (!user.IsRegestered(email))
         {
             log.Warn("no such email");
             throw new Exception("no email");
         }
-        if (!userController.isLoggedin_user(email))
+        if (!loggedIn.ContainsKey(user.email))
         {
             log.Warn("offline user");
             throw new Exception("User is offline");
@@ -111,7 +113,7 @@ public class Boardfacad
         List<Board> boards = User_Board[email];
         foreach (Board board in boards)
         {
-            if (board.getboardname().Equals(boardname))
+            if (board.GetBoardName().Equals(boardname))
             {
                 log.Info("board removed");
                 boards.Remove(board);
@@ -126,11 +128,11 @@ public class Boardfacad
     public string GetColumnName(string email, string boardname, int columnOrdinal)
     {
         check_Status(columnOrdinal);
-        if (!userController.IsRegestered(email))
+        if (!user.IsRegestered(email))
         {
             log.Warn("attempt to get a column name using a non registered email"); throw new Exception("email is not registered");
         }
-        if (!userController.isLoggedin_user(email))
+        if (!loggedIn.ContainsKey(user.email))
         {
             log.Warn("attempt to get column with an offline user");
             throw new Exception("offline user");
@@ -149,7 +151,7 @@ public class Boardfacad
         List<Board> boards = User_Board[email];
         foreach (Board board in boards)
         {
-            if (board.getboardname().Equals(boardname))
+            if (board.GetBoardName().Equals(boardname))
             {
                 return board.GetColumnName(columnOrdinal);
             }
@@ -176,13 +178,13 @@ public class Boardfacad
     public void LimitTheColumn(string email, string boardname, int Ordinal, int limit)
     {
         check_Status(Ordinal);
-        if (!userController.IsRegestered(email))
+        if (!user.IsRegestered(email))
         {
             log.Warn("attempt to limit a column using a non registered email");
             throw new Exception($"No Such user!");
 
         }
-        if (!userController.isLoggedin_user(email))
+        if (!loggedIn.ContainsKey(user.email))
         {
             log.Warn("attempt to limit a column of an offline user");
             throw new Exception($"User is not logged in!");
@@ -190,7 +192,7 @@ public class Boardfacad
         List<Board> boards = User_Board[email];
         foreach (Board board in boards)
         {
-            if (board.getboardname().Equals(boardname))
+            if (board.GetBoardName().Equals(boardname))
             {
                 board.setlimit(Ordinal, limit);
                 return;
@@ -214,12 +216,12 @@ public class Boardfacad
     {
         int limit = 0;
         check_Status(columnstatus);
-        if (!userController.IsRegestered(email))
+        if (!user.IsRegestered(email))
         {
             log.Warn("attempt to get a column name from a non registered email");
             throw new Exception("the given email is not registered");
         }
-        if (!userController.isLoggedin_user(email))
+        if (!loggedIn.ContainsKey(user.email))
         {
             log.Warn("attempt to get a column limit from an offline user");
             throw new Exception($"User is not logged in!");
@@ -232,7 +234,7 @@ public class Boardfacad
         List<Board> boards = User_Board[email];
         foreach (Board board in boards)
         {
-            if (board.getboardname().Equals(boardname))
+            if (board.GetBoardName().Equals(boardname))
             {
                 limit = board.getlimit(columnstatus);
                 return limit;
@@ -256,12 +258,12 @@ public class Boardfacad
     /// <returns>List of all in progress task to the user</returns>
     public List<Task> ProTasks(string email)
     {
-        if (!userController.IsRegestered(email))
+        if (!user.IsRegestered(email))
         {
             log.Warn("email not found");
             throw new Exception($"email not found");
         }
-        if (!userController.isLoggedin_user(email))
+        if (!loggedIn.ContainsKey(user.email))
         {
             log.Warn("attempt to list inprogress task from an offline user");
             throw new Exception($"User is not logged in!");
@@ -299,12 +301,12 @@ public class Boardfacad
     public Task[] GetTheColumn(string email, string boardname, int Ordinal)
     {
         check_Status(Ordinal);
-        if (!userController.IsRegestered(email))
+        if (!user.IsRegestered(email))
         {
             log.Warn("attempt to move a task to an unregistered user");
             throw new Exception("User is not registered");
         }
-        if (!userController.isLoggedin_user(email))
+        if (!loggedIn.ContainsKey(user.email))
         {
             log.Warn("attempt to move a task to an offline user");
             throw new Exception("User is not logged in!");
@@ -322,7 +324,7 @@ public class Boardfacad
         List<Board> boards = User_Board[email];
         foreach (Board board in boards)
         {
-            if (board.getboardname().Equals(boardname))
+            if (board.GetBoardName().Equals(boardname))
             {
                 //Console.WriteLine(board.getCol(Ordinal).List_Of_Tasks().ToString);
                 return board.getCol(Ordinal).List_Of_Tasks().ToArray();
@@ -340,7 +342,7 @@ public class Boardfacad
         }
 
         // Check if the user is logged in
-        if (!SignedUser.IsLoggedIn(email))
+        if (!loggedIn.ContainsKey(SingedUser.email)) 
         {
             log.Warn("Attempt to list InProgress tasks from offline user");
             throw new Exception("User is not logged in!");
@@ -365,12 +367,12 @@ public class Boardfacad
 
     public void AddTask(string email, string boardname, string Title, string description, DateTime duedate)
     {
-        if (!userController.IsRegestered(email))
+        if (!user.IsRegestered(email))
         {
             log.Warn("not registered email");
             throw new Exception("User is not registered");
         }
-        if (!userController.isLoggedin_user(email))
+        if (!loggedIn.ContainsKey(user.email))
         {
             log.Warn("attempt to add a task to an offline user");
             throw new Exception("User is not logged in!");
@@ -400,13 +402,13 @@ public class Boardfacad
             List<Board> boards = User_Board[email];
             foreach (Board board in boards)
             {
-                if (board.getboardname().Equals(boardname))
+                if (board.GetBoardName().Equals(boardname))
                 {
                     Column column = board.getCol(0);
                     column.AddTask(email, Title, description, duedate, CountTasks);
                     Task newtask = new Task(CountTasks, duedate, Title, description, email, boardname);
                     mytasks.Add(CountTasks, newtask);
-                    myIds.Add(newtask, CountTasks);
+                    Ids.Add(newtask, CountTasks);
                     CountTasks = CountTasks + 1;
                     log.Info("Task added to the board successfully");
                     return;
@@ -421,13 +423,13 @@ public class Boardfacad
 
     public void ChangeTaskPlace(string email, string boardname, int Ordinal, int taskid)
     {
-        check_Status(Ordinal); /// IMPLEMENT THE HElPING FUNCTION 
-        if (!userController.IsRegestered(email))
+        check_Status(Ordinal); 
+        if (!user.IsRegestered(email))
         {
             log.Warn("attempt to move a task to an unregistered user");
             throw new Exception("User is not registered");
         }
-        if (!userController.isLoggedin_user(email))
+        if (!loggedIn.ContainsKey(user.email))
         {
             log.Warn("attempt to move a task to an offline user");
             throw new Exception("User is not logged in!");
@@ -450,7 +452,7 @@ public class Boardfacad
         List<Board> boards = User_Board[email];
         foreach (Board board in boards)
         {
-            if (board.getboardname().Equals(boardname))
+            if (board.GetBoardName().Equals(boardname))
             {
                 Column column = board.getCol(Ordinal);
                 List<Task> tasks = column.x();
@@ -488,12 +490,12 @@ public class Boardfacad
     public void ChangeTaskTitle(string email, string boardname, int Ordinal, int taskid, string newTitle)
     {
         check_Status(Ordinal);
-        if (!userController.IsRegestered(email))
+        if (user.IsRegestered(email))
         {
             log.Warn("attempt to move a task to an unregistered user");
             throw new Exception("User is not registered");
         }
-        if (!userController.isLoggedin_user(email))
+        if (!loggedIn.ContainsKey(user.email))
         {
             log.Warn("attempt to move a task to an offline user");
             throw new Exception("User is not logged in!");
@@ -502,11 +504,11 @@ public class Boardfacad
         {
             if (User_Board.ContainsKey(email))
             {
-                1
+                
                 List<Board> boards = User_Board[email];
                 foreach (Board board in boards)
                 {
-                    if (board.getboardname().Equals(boardname))
+                    if (board.GetBoardName().Equals(boardname))
                     {
                         Column column = board.getCol(Ordinal);
                         List<Task> tasks = column.List_Of_Tasks();
@@ -542,12 +544,12 @@ public class Boardfacad
     public void UpdateTaskDescription(string email, string boardname, int Ordinal, int taskid, string newDescription)
     {
         check_Status(Ordinal);
-        if (!userController.IsRegestered(email))
+        if (!user.IsRegestered(email))
         {
             log.Warn("attempt to move a task to an unregistered user");
             throw new Exception("User is not registered");
         }
-        if (!userController.isLoggedin_user(email))
+        if (!loggedIn.ContainsKey(user.email))
         {
             log.Warn("attempt to move a task to an offline user");
             throw new Exception("User is not logged in!");
@@ -559,7 +561,7 @@ public class Boardfacad
                 List<Board> boards = User_Board[email];
                 foreach (Board board in boards)
                 {
-                    if (board.getboardname().Equals(boardname))
+                    if (board.GetBoardName().Equals(boardname))
                     {
                         Column column = board.getCol(Ordinal);
                         List<Task> tasks = column.List_Of_Tasks();
@@ -594,14 +596,14 @@ public class Boardfacad
     public void UpdateTaskDateDue(string email, string boardname, int Ordinal, int taskid, DateTime newDate)
     {
         check_Status(Ordinal);
-        if (!userController.IsRegestered(email))
+        if (!user.IsRegestered(email))
         {
             log.Warn("attempt to update a task dueDate to an unexisted email");
             throw new Exception("email is not found");
         }
-        if (!userController.isLoggedin_user(email))
+        if (!loggedIn.ContainsKey(user.email))
         {
-            log.Warn("attempt to update a task duoDate to an offline user");
+            log.Warn("attempt to update a task dueDate to an offline user");
             throw new Exception("User is not logged in!");
         }
         if (Check_Date(newDate))
@@ -611,7 +613,7 @@ public class Boardfacad
                 List<Board> boards = User_Board[email];
                 foreach (Board board in boards)
                 {
-                    if (board.getboardname().Equals(boardname))
+                    if (board.GetBoardName().Equals(boardname))
                     {
                         Column column = board.getCol(Ordinal);
                         List<Task> tasks = column.List_Of_Tasks();
@@ -653,5 +655,18 @@ public class Boardfacad
     }
 
 
+    public bool Check_Date(DateTime date)
+    {
+        if(date == null)
+        {
+            log.Warn.("the date is null");
+            throw new Exception("There is no date as null");
+        }
+        if(DateTime.Now > date)
+        {
 
-
+            log.Warn("the date time shouldnt be expired ");
+                throw new Exception("There is no expired date");
+        }
+        return true;
+    }
