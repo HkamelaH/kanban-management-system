@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BGU_SE_Courses.Kanban.Backend.BussinessLayer.Board;
-//using BGU_SE_Courses.Kanban.Backend.BussinessLayer.task;
+using IntroSE.Kanban.Backend.BussinessLayer.Board;
+//using IntroSE.Kanban.Backend.BussinessLayer.task;
 
 namespace IntroSE.Kanban.Backend.BussinessLayer.Board
 {
@@ -12,7 +12,7 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
     {
         private int limit_of_tasks;
         private int col_Ordinal;
-        private List<Task> TasksList;
+        private List<Task> List_of_tasks;
         private string ColumnName;
         private string board;
         /// <summary>
@@ -22,21 +22,11 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
         public Column(int Ordinal, string board)
         {
             this.col_Ordinal = Ordinal;
-            this.TasksList = new List<Task>();
+            this.List_of_tasks = new List<Task>();
             this.limit_of_tasks = -1;
-            switch (ordinal)
-            {
-                case 0:
-                    this.columnName = "backlog";
-                    break;
-                case 1:
-                    this.columnName = "in progress";
-                    break;
-                default:
-                    this.columnName = "done";
-                    break;
-            };
-
+            if (Ordinal == 0) ColumnName = "backlog";
+            if (Ordinal == 1) ColumnName = "in progress";
+            else ColumnName = "done";
 
             this.board = board;
         }
@@ -68,7 +58,7 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
         /// <return>the function return the number of tasks </return>
         public int num_of_tasks()
         {
-            return this.TasksList.Count;
+            return this.List_of_tasks.Count;
         }
         /// <summary>
         /// this function return a list of tasks in the column 
@@ -76,37 +66,28 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
         /// <return>the function return a list of tasks </return>
         public List<Task> List_Of_Tasks()
         {
-            return this.TasksList;
+            return this.List_of_tasks;
         }
         public void AddTask(string email, string title, string description, DateTime dueDate, int taskId)
         {
-            if (!(TasksList.Count == limit_of_tasks))
+            if (!(List_of_tasks.Count == limit_of_tasks))
             {
-                TasksList.Add(new Task(taskId, dueDate, title, description, email, board));
+                List_of_tasks.Add(new Task(taskId, dueDate, title, description, email, board));
 
             }
-            else throw new Exception(" No room for more Tasks to add ");
+            else throw new Exception("no more tasks can be added");
         }
 
         public string GetColumnName(int Ordinal)
         {
-            switch (ordinal)
-            {
-                case 0:
-                    return "backlog";
-                case 1:
-                    return "in progress";
-                default:
-                    return "done";
-            }
+            if (Ordinal == 0) return "backlog";
+            if (Ordinal == 1) return "in progress";
+            else return "done";
         }
         public void Remove(Task task)
         {
-            if (TasksList.Count > 0)
-            {
-                TasksList.Remove(task);
-            }
-            else throw new Exception(" No room for more Tasks to remove ");
+            if (List_of_tasks.Count > 0)
+                List_of_tasks.Remove(task);
         }
     }
 }
