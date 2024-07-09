@@ -24,5 +24,14 @@ namespace IntroSE.Forum.Backend.ServiceLayer
             ReturnValue = returnValue;
         }
 
+        public bool CheckforError()
+        {
+            if (ErrorMessage == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }
