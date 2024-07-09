@@ -4,20 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
-using Kanban.Backend.ServiceLayer;
-using kanban.Backend.Service;
+using IntroSE.Forum.Backend.ServiceLayer;
+using IntroSE.Kanban.Backend.ServiceLayer;
 
 
 namespace BackendTests
 {
     internal class UserTest
     {
-        private readonly UserService userService;
+        private UserService userService;
 
-        public UserTests(UserService userService)
+        public UserTest(UserService userService)
         {
             this.userService = userService;
         }
+
         public void MainTests()
         {
             RegisterTest();
@@ -65,7 +66,7 @@ namespace BackendTests
             string RegisterNumber7 = userService.Register("Lona@post.bgu.ac.il", "Welovebgu3333333333333333333333333333");
             Response response7 = JsonSerializer.Deserialize<Response>(RegisterNumber7);
             Console.WriteLine(response7.ErrorMessage);
-          //  pass shorter than 6
+            //  pass shorter than 6
             string RegisterNumber8 = userService.Register("soso@post.bgu.ac.il", "haha");
             Response response8 = JsonSerializer.Deserialize<Response>(RegisterNumber8);
             Console.WriteLine(response8.ErrorMessage);
@@ -80,22 +81,22 @@ namespace BackendTests
         {
             //good example
             string LoginNumber1 = userService.Login("ghadeeerd@post.bgu.ac.il", "Welovebgu3");
-            Response response1 = JsonSerializer.Deserialize<Response>(login1);
+            Response response1 = JsonSerializer.Deserialize<Response>(LoginNumber1);
             Console.WriteLine(response1.ErrorMessage);
             //wrong password
             string LoginNumber2 = userService.Login("ghadeerd@post.bgu.ac.il", "wrongpass");
-            Response response2 = JsonSerializer.Deserialize<Response>(login2);
+            Response response2 = JsonSerializer.Deserialize<Response>(LoginNumber2);
             Console.WriteLine(response2.ErrorMessage);
             // The email is not registered
             string loginNumber3 = userService.Login("whynotregesteeerd@gmail.com", "Nopassword!1");
-            Response response3 = JsonSerializer.Deserialize<Response>(login3);
+            Response response3 = JsonSerializer.Deserialize<Response>(loginNumber3);
             Console.WriteLine(response3.ErrorMessage);
         }
 
         //<summary>
         //For testing logout
         //<summary>
-        //<example> the funvtion should print logged out succesfully 
+        //<example> the funvtion should print logged out 
         public void LogoutTest()
         {
             string logout = userService.Logout("ghadeeerd@post.bgu.ac.il");

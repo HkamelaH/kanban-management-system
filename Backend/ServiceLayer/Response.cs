@@ -3,32 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using kanban.Backend.Business;
-using IntroSE.Kanban.Backend.ServiceLayer;
 
-namespace IntroSE.Kanban.Backend.ServiceLayer
-
+namespace IntroSE.Forum.Backend.ServiceLayer
 {
     public class Response
     {
-        public string? ErrorMessage { get; set; }
-        public string? ReturnValue { get; set; }
+        public string ErrorMessage { get; set; }
+        public object ReturnValue { get; set; }
+        public bool ErrorOccured { get => ErrorMessage != null; }
         public Response() { }
-        public Response(string errorMessage)
+        public Response(string msg)
         {
-            ErrorMessage = errorMessage;
+            ErrorMessage = msg;
+            ReturnValue = null;
         }
-        public Response(string errorMessage, string returnValue)
+
+        public Response(string msg, object returnValue)
         {
-            ErrorMessage = errorMessage;
+            ErrorMessage = msg;
             ReturnValue = returnValue;
         }
-       
+
+        public bool CheckforError()
+        {
+            if (ErrorMessage == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
-
-        
-
-
-
 }
-

@@ -1,9 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>IntroSE.Kanban.Backend</RootNamespace>
-    <AssemblyName>IntroSE.Kanban.Backend</AssemblyName>
-    <OutputType>Library</OutputType>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>IntroSE.Kanban.Backend</RootNamespace>
+		<AssemblyName>IntroSE.Kanban.Backend</AssemblyName>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="linq2db.SQLite" Version="5.4.1" />
+		<PackageReference Include="log4net" Version="2.0.15" />
+		<PackageReference Include="SQLitePCLRaw.core" Version="2.1.8" />
+	</ItemGroup>
 </Project>
