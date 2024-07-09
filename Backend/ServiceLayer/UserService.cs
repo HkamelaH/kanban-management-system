@@ -86,6 +86,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
                 response = new Response();
                 return JsonSerializer.Serialize(response);
 
+
             }
             catch (Exception e)
             {
@@ -93,10 +94,54 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
                 return JsonSerializer.Serialize(response);
             }
         }
+        ///<summary>
+        ///the method loads all data
+        /// </summary>
+        /// <param </param>
+        /// <returns>An empty response, unless an error occurs</returns>
+
+        public string LoadData()
+        {
+            Response response;
+            try
+            {
+                userfacad.LoadTheData();
+                response = new Response();
+                return JsonSerializer.Serialize(response);
+            }
+            catch (Exception e)
+            {
+                response = new Response(e.Message, null);
+                return JsonSerializer.Serialize(response);
+            }
+        }
+
+        // <summary>
+        /// the method deletes the the data
+        /// </summary>
+        /// <param ></param>
+        /// <returns>An empty response, unless an error occurs</returns>
+        public string DeleteData()
+        {
+
+
+            Response res;
+            try
+            {
+                userfacad.DeleteTheData();
+                res = new Response();
+                return JsonSerializer.Serialize(res);
+            }
+            catch (Exception ex)
+            {
+                res = new Response(ex.Message, null);
+                return JsonSerializer.Serialize(res);
+            }
+
+
+
+        }
     }
 
 
 }
-
-
-

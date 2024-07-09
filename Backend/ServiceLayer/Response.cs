@@ -17,10 +17,20 @@ namespace IntroSE.Forum.Backend.ServiceLayer
             ErrorMessage = msg;
             ReturnValue = null;
         }
+
         public Response(string msg, object returnValue)
         {
             ErrorMessage = msg;
             ReturnValue = returnValue;
+        }
+
+        public bool CheckforError()
+        {
+            if (ErrorMessage == null)
+            {
+                return false;
+            }
+            return true;
         }
 
     }

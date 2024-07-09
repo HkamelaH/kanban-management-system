@@ -16,12 +16,15 @@ namespace IntroSE.Kanban.Backend.BusinessLayer.User
         public Dictionary<string, UserClass> users;
         private int counter;
 
+
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly DALuserfacad daluser;
         public UserFacad()
         {
 
             users = new Dictionary<string, UserClass>();
             counter = 0;
+            daluser = new DALuserfacad();
         }
         internal void Register(string email, string password)
         {
@@ -44,6 +47,7 @@ namespace IntroSE.Kanban.Backend.BusinessLayer.User
             users.Add(email, newUser);
             users[email].login(password);
             counter = counter + 1;
+            daluser.Insert(newUser.UserToDal());
             log.Info("new user is registered");
         }
         public bool isLoggedin_user(string email)
@@ -152,6 +156,30 @@ namespace IntroSE.Kanban.Backend.BusinessLayer.User
             }
             return true;
         }
+        /// <summary>
+        /// This function loads the data needed for the User Service.
+        /// <param> It has no Parametrs</param>
+        /// </summary>
+        /// <returns></returns>
+        public void LoadTheData()
+        {
+            List<UserDTO> GETALLUSERS = daluser.allusers();
+            foreach (UserDTO userdto in GETALLUSERS)
+            {
+                users.Add(userdto.Email, new user(userdto));
+            }
+        }
+        /// <summary>
+        /// This function delete all the data.
+        /// <param> It has no Parametrs</param>
+        /// </summary>
+        /// <returns></returns>
+        public void DeleteTheData()
+        {
+            daluser.DeleteTheData();
+        }
+
+
         //private bool ValidateEmail(string email)
         //{
 

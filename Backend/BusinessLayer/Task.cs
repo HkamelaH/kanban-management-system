@@ -202,6 +202,7 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
 
         public bool ctitle (string title )
         {
+<<<<<<< HEAD
             if (title is null)
             {
                 log.Warn("title cant be null ");
@@ -218,6 +219,11 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
                 throw new Exception("the length of the title cant be more than 50 ");
             }
             return true;
+=======
+
+
+            return new Task(id, dueDate, title, description, email, board);
+>>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
         }
 
         public bool cdescription (string description )

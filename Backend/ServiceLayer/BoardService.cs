@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Xml.Linq;
+using System.Globalization;
 
 
 namespace IntroSE.Kanban.Backend.ServiceLayer
@@ -14,11 +15,17 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
     public class BoardService
     {
         private readonly Boardfacad BoardUser;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
 
         public BoardService(Boardfacad BoardUser)
         {
             this.BoardUser = BoardUser;
 
+        }
+        public Boardfacad GetBoardFacad()
+        {
+            return this.BoardUser;
         }
 
         /// <summary>
@@ -341,6 +348,137 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
                 return JsonSerializer.Serialize(response);
             }
         }
+
+        ///// <summary>		 
+        ///// the function returns the list of all user's boards.		 
+        ///// </summary>		 
+        ///// <param name="email">Email of the user. Must be logged in</param>		 
+        ///// <returns>A response with a list of IDs of all user's boards, unless an error occurs (see <see cref="GradingService"/>)</returns>		 
+        public string GetTheUserBoard(string email)
+        {
+            throw new NotImplementedException();
+
+        }
+        /// <summary>		 
+        /// This method adds a user as member to an existing board.		 
+        /// </summary>		 
+        /// <param name="email">The email of the user that joins the board. Must be logged in</param>		 
+        /// <param name="boardID">The board's ID</param>		 
+        /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>		 
+        public string Join(string email, int boardID)
+        {
+            throw new NotImplementedException();
+
+        }
+
+        /// <summary>		 
+        /// This method removes a user from the members list of a board.		 
+        /// </summary>		 
+        /// <param name="email">The email of the user. Must be logged in</param>		 
+        /// <param name="boardID">The board's ID</param>		 
+        /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>		 
+        public string LeaveTheBoard(string email, int boardID)
+        {
+            throw new NotImplementedException();
+
+        }
+
+
+
+        /// <summary>		 
+        /// This method assigns a task to a user		 
+        /// </summary>		 
+        /// <param name="email">Email of the user. Must be logged in</param>		 
+        /// <param name="boardName">The name of the board</param>		 
+        /// <param name="columnOrdinal">The column number. The first column is 0, the number increases by 1 for each column</param>		 
+        /// <param name="taskID">The task to be updated identified a task ID</param>        		 
+        /// <param name="emailAssignee">Email of the asignee user</param>		 
+        /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>		 
+        public string AssignTheTask(string email, string boardName, int columnOrdinal, int taskID, string emailAssignee)
+        {
+            throw new NotImplementedException();
+
+        }
+
+
+
+        /// <summary>		 
+        /// This method returns a board's name		 
+        /// </summary>		 
+        /// <param name="boardId">The board's ID</param>		 
+        /// <returns>A response with the board's name, unless an error occurs (see <see cref="GradingService"/>)</returns>		 
+        public string GetTheBoardName(int boardId)
+        {
+            throw new NotImplementedException();
+
+        }
+
+
+
+        /// <summary>		 
+        /// This method transfers a board ownership.		 
+        /// </summary>		 
+        /// <param name="currentOwnerEmail">Email of the current owner. Must be logged in</param>		 
+        /// <param name="newOwnerEmail">Email of the new owner</param>		 
+        /// <param name="boardName">The name of the board</param>		 
+        /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>		 
+        public string TransferTheOwnership(string currentOwnerEmail, string newOwnerEmail, string boardName)
+        {
+            throw new NotImplementedException();
+
+        }
+
+
+
+        ///<summary>This method loads all persisted data.		 
+        ///<para>		 
+        ///<b>IMPORTANT:</b> When starting the system via the GradingService - do not load the data automatically, only through this method.		 
+        ///In some cases we will call LoadData when the program starts and in other cases we will call DeleteData. Make sure you support both options.		 
+        ///</para>		 
+        /// </summary>		 
+        /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>		 
+        public string LoadTheData()
+        {
+            throw new NotImplementedException();
+
+        }
+
+        ///<summary>This method deletes all persisted data.		 
+        ///<para>		 
+        ///<b>IMPORTANT:</b>		 
+        ///In some cases we will call LoadData when the program starts and in other cases we will call DeleteData. Make sure you support both options.		 
+        ///</para>		 
+        /// </summary>		 
+        ///<returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>		 
+        public string DeleteTheData()
+        {
+            throw new NotImplementedException();
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 }
