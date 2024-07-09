@@ -123,13 +123,11 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs</returns>
 
 
-
         public string DeleteData()
         {
 
-<<<<<<< HEAD
-            throw new NotImplementedException();
-=======
+
+
 
             Response res;
             try
@@ -144,7 +142,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
                 return JsonSerializer.Serialize(res);
             }
 
->>>>>>> User
+
 
 
         }
