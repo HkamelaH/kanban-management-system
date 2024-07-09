@@ -95,7 +95,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
             }
         }
         ///<summary>
-        ///the method loads all data
+        ///the function loads all data
         /// </summary>
         /// <param </param>
         /// <returns>An empty response, unless an error occurs</returns>
@@ -106,14 +106,16 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         }
 
         // <summary>
-        /// the method deletes the the data
+        /// the function deletes the data
         /// </summary>
         /// <param ></param>
         /// <returns>An empty response, unless an error occurs</returns>
 
 
+
         public string DeleteData()
         {
+
             throw new NotImplementedException();
 
 
