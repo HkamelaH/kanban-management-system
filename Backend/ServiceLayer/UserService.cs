@@ -102,7 +102,18 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
 
         public string LoadData()
         {
-            throw new NotImplementedException();
+            Response response;
+            try
+            {
+                userfacad.LoadTheData();
+                response = new Response();
+                return JsonSerializer.Serialize(response);
+            }
+            catch (Exception e)
+            {
+                response = new Response(e.Message, null);
+                return JsonSerializer.Serialize(response);
+            }
         }
 
         // <summary>
@@ -116,7 +127,24 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         public string DeleteData()
         {
 
+<<<<<<< HEAD
             throw new NotImplementedException();
+=======
+
+            Response res;
+            try
+            {
+                userfacad.DeleteTheData();
+                res = new Response();
+                return JsonSerializer.Serialize(res);
+            }
+            catch (Exception ex)
+            {
+                res = new Response(ex.Message, null);
+                return JsonSerializer.Serialize(res);
+            }
+
+>>>>>>> User
 
 
         }

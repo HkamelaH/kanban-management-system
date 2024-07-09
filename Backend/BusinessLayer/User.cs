@@ -14,6 +14,7 @@ namespace IntroSE.Kanban.Backend.BusinessLayer.User
         private int Id;
         private bool LoggedIn;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private Dictionary<string, int> IdAndBoard;
 
 
         public UserClass(string email, string password, int id)
@@ -23,6 +24,17 @@ namespace IntroSE.Kanban.Backend.BusinessLayer.User
             this.password = password;
             Id = id;
             LoggedIn = true;
+        }
+        public UserClass(UserDTO user)
+        {
+
+            email = user.Email;
+            password = user.Password;
+        }
+
+        public UserDTO UserToDal()
+        {
+            return new UserDTO(email, password, false);
         }
 
         public string GetEmail() { return email; }
@@ -46,5 +58,15 @@ namespace IntroSE.Kanban.Backend.BusinessLayer.User
         {
             this.LoggedIn = false;
         }
+        public Dictionary<string, int> getboardlist()
+        {
+            return this.IdAndBoard;
+        }
+
+        public void add_board(string boardname, int id)
+        {
+            this.IdAndBoard.Add(boardname, id);
+        }
+
     }
 }
