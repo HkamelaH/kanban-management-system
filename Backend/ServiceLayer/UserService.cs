@@ -95,7 +95,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
             }
         }
         ///<summary>
-        ///the function loads all data
+        ///the method loads all data
         /// </summary>
         /// <param </param>
         /// <returns>An empty response, unless an error occurs</returns>
@@ -117,16 +117,12 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         }
 
         // <summary>
-        /// the function deletes the data
+        /// the method deletes the the data
         /// </summary>
         /// <param ></param>
         /// <returns>An empty response, unless an error occurs</returns>
-
-
         public string DeleteData()
         {
-
-
 
 
             Response res;
@@ -144,12 +140,8 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
 
 
 
-
         }
     }
 
 
 }
-
-
-
