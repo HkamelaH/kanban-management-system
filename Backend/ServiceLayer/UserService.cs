@@ -94,6 +94,28 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
                 return JsonSerializer.Serialize(response);
             }
         }
+        ///<summary>
+        ///the method loads all data
+        /// </summary>
+        /// <param </param>
+        /// <returns>An empty response, unless an error occurs</returns>
+
+        public string LoadData()
+        {
+            throw new NotImplementedException();
+        }
+
+        // <summary>
+        /// the method deletes the the data
+        /// </summary>
+        /// <param ></param>
+        /// <returns>An empty response, unless an error occurs</returns>
+
+        public string DeleteData()
+        {
+            throw new NotImplementedException();
+
+        }
     }
 
 
