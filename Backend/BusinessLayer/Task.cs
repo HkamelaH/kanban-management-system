@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IntroSE.Kanban.Backend.DataAccessLayer.DAO;
+using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,14 +11,17 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
 {
     public class Task
     {
-        public int id { get; set; }
-        public readonly DateTime creationTime;
-        public DateTime dueDate { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
-        public int ColumnOrdinal { get; set; }
-        public string Email { get; set; }
-        public string myboard { get; set; }
+        private int id ;
+        private string assignee;
+        private  readonly DateTime creationTime;
+        private  DateTime dueDate;
+        private string title;
+        private string description;
+        private int ColumnOrdinal;
+        private string Email;
+        private string myboard;
+        private int board_id;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
         /// <summary>
@@ -30,7 +35,7 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
         /// <param> name="Description">the task decsription</param>
         /// <param> name="board_Status">the task status or the column name of the task </param>
         /// <param> name="Email">the user email who created the task</param>
-        public Task(int id, DateTime dueDate, string title, string description, string Email, string myboard)
+        public Task(int id, DateTime dueDate, string title, string description, string Email , string myboard, int board_id)
         {
             this.id = id;
             this.creationTime = DateTime.Now;
@@ -40,7 +45,40 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
             this.ColumnOrdinal = 0;
             this.Email = Email;
             this.myboard = myboard;
+            this.assignee = "unassigned";
+            this.board_id = board_id;
+            
+
         }
+
+        public Task(TaskDAO dtotask)
+        {
+            this.cdescription( dtotask.desciptions);
+            this.creationTime = dtotask.CreationTime;
+            this.id = dtotask.taskID;
+            this.dueDate = dtotask.DUEDATE;
+            this.ctitle (dtotask.TITLE);
+            this.ColumnOrdinal = dtotask.ORDINAL;
+            this.Email = dtotask.EMAIL;
+            this.board_id = dtotask.BoardID;
+            this.assignee = dtotask.Assignee;
+        }
+
+        public TaskDAO ToDal()
+        {
+            return new TaskDAO(id, creationTime, dueDate, title, description, Email, board_id, ColumnOrdinal);
+        }
+
+        public string GetAssignee()
+        {
+            return this.assignee;
+        }
+
+        public void SetAssignee(string ass)
+        {
+            this.assignee = ass; 
+        }
+
         /// <summary>
         /// this is a getter for the task id
         /// </summary>
@@ -101,6 +139,10 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
         {
             return myboard;
         }
+        public int getboardid()
+        {
+            return this.board_id;
+        }
 
         /// <summary>
         /// this is a setter for the task duedate
@@ -119,7 +161,9 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
         /// <return>the function does not return anything</return>
         public void setTitle(string newTitle)
         {
-            this.title = newTitle;
+            if (ctitle(newTitle))
+                this.title = newTitle;
+            
         }
 
 
@@ -130,7 +174,8 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
         /// <return>the function does not return anything</return>
         public void setdescription(string newdescription)
         {
-            this.description = newdescription;
+            if (cdescription(newdescription))
+                 this.description = newdescription;
         }
 
         /// <summary>
@@ -153,10 +198,44 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
         {
             this.Email = newEmail;
         }
+        
 
-        public Task getTask(int id, string email, string board, int Ordinal)
+        public bool ctitle (string title )
         {
-            return new Task(id, dueDate, title, description, email, board);
+            if (title is null)
+            {
+                log.Warn("title cant be null ");
+                throw new Exception("title cant be null ");
+            }
+            if (title.Length == 0)
+            {
+                log.Warn("title cant be empty ");
+                throw new Exception("title cant be empty");
+            }
+            if (title.Length > 50)
+            {
+                log.Warn("the length of the title cant be more than 50 ");
+                throw new Exception("the length of the title cant be more than 50 ");
+            }
+            return true;
         }
+
+        public bool cdescription (string description )
+        {
+            if (description == null)
+            {
+                log.Warn("decsription cant be null ");
+                throw new Exception("decsription cant be  null");
+            }
+            if (description.Length > 300)
+            {
+                log.Warn("the length of the description cant be more than 300");
+                throw new Exception("the length of the description cant be more than 300");
+            }
+            return true;
+        }
+    
+
+
     }
 }
