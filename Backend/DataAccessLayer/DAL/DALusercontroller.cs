@@ -39,11 +39,11 @@ namespace IntroSE.Kanban.Backend.DataAccessLayer.DAL
         }
 
         /// <summary>
-		/// an a sql query to add a user to the users table
-		/// </summary>
-		/// <param name="user"> user dto to add its fields to the users table</param>
-		/// <returns></returns>
-		public bool InsertUser(UserDTO user)
+        /// an a sql query to add a user to the users table
+        /// </summary>
+        /// <param name="user"> user dto to add its fields to the users table</param>
+        /// <returns></returns>
+        public bool InsertUser(UserDTO user)
         {
             using (var connections = new SQLiteConnection(connection))
             {
@@ -79,10 +79,10 @@ namespace IntroSE.Kanban.Backend.DataAccessLayer.DAL
         }
 
         /// <summary>
-		/// an a sql query to delete all data from the users table
-		/// </summary>
-		/// <returns></returns>
-		public bool DeleteAll()
+        /// an a sql query to delete all data from the users table
+        /// </summary>
+        /// <returns></returns>
+        public bool DeleteAll()
         {
             using (var connections = new SQLiteConnection(connection))
             {
