@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using IntroSE.Kanban.Backend.BussinessLayer.Board;
+using IntroSE.Kanban.Backend.DataAccessLayer.DAL;
+using IntroSE.Kanban.Backend.DataAccessLayer.DAO;
 //using IntroSE.Kanban.Backend.BussinessLayer.task;
 
 namespace IntroSE.Kanban.Backend.BussinessLayer.Board
@@ -14,7 +17,11 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
         private int col_Ordinal;
         private List<Task> List_of_tasks;
         private string ColumnName;
-        private string board;
+        private string board_name;
+        private int boardid;
+
+        private readonly DALtaskcontroller DAL_task = new DALtaskcontroller();
+        private readonly DALcolumncontroller DAL_column = new DALcolumncontroller();
         /// <summary>
         /// constructor for the column class
         /// </summary>
@@ -27,8 +34,21 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
             if (Ordinal == 0) ColumnName = "backlog";
             if (Ordinal == 1) ColumnName = "in progress";
             else ColumnName = "done";
+<<<<<<< HEAD
+=======
+            this.board_name = board;
 
-            this.board = board;
+        }
+>>>>>>> main
+
+        /// <summary>
+        /// this function return anew column dao  
+        /// </summary>
+        /// <return> return the columndao </return>
+
+        public ColumnDAO todal()
+        {
+            return new ColumnDAO(this.boardid, this.col_Ordinal, this.ColumnName, this.limit_of_tasks);
         }
         /// <summary>
         /// this function return the limit of the task in the column 
@@ -37,6 +57,10 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
         public int getlim()
         {
             return this.limit_of_tasks;
+        }
+        public void set_board_id(int id)
+        {
+            this.boardid = id;
         }
         /// <summary>
         /// this function change the limit of the tasks in the column 
@@ -48,6 +72,7 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
             if (lim == -1 || lim >= num_of_tasks())
             {
                 this.limit_of_tasks = lim;
+                this.todal().save();
             }
             else { throw new Exception("Column contains tasks more than the limit!"); }
 
@@ -68,26 +93,58 @@ namespace IntroSE.Kanban.Backend.BussinessLayer.Board
         {
             return this.List_of_tasks;
         }
+        /// <summary>
+        /// this function add new task to the column task list 
+        /// </summary>
+        /// <return> null  </return>
         public void AddTask(string email, string title, string description, DateTime dueDate, int taskId)
         {
             if (!(List_of_tasks.Count == limit_of_tasks))
             {
+<<<<<<< HEAD
                 List_of_tasks.Add(new Task(taskId, dueDate, title, description, email, board));
+=======
+                Task addtask = new Task(taskId, dueDate, title, description, email, board_name, boardid);
+                addtask.SetAssignee(email);
+                List_of_tasks.Add(addtask);
+                this.DAL_task.Insert(addtask.ToDal());
+>>>>>>> main
 
             }
             else throw new Exception("no more tasks can be added");
         }
 
-        public string GetColumnName(int Ordinal)
+        public string GetColumnName(int ordinal)
         {
+<<<<<<< HEAD
             if (Ordinal == 0) return "backlog";
             if (Ordinal == 1) return "in progress";
             else return "done";
+=======
+            return this.ColumnName;
+>>>>>>> main
         }
+
         public void Remove(Task task)
         {
             if (List_of_tasks.Count > 0)
                 List_of_tasks.Remove(task);
         }
+        public int getboardid()
+        {
+            return this.boardid;
+        }
+        public void Prepare()
+        {
+            this.limit_of_tasks = this.DAL_column.GetTaskLimit(this.boardid, this.col_Ordinal);
+            List<TaskDAO> tasks = this.DAL_task.SelectcolsTasks(this.boardid, this.col_Ordinal);
+            foreach (TaskDAO tsk in tasks)
+            {
+                this.List_of_tasks.Add(new Task(tsk));
+            }
+
+        }
+
+
     }
 }
