@@ -109,7 +109,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string LimitColumn(string email, string boardName, int columnOrdinal, int limit)
         {
-            return factory.LimitTheColumn(email, boardName, columnOrdinal, limit);
+            return factory.LimitColumn(email, boardName, columnOrdinal, limit);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>A response with the column's limit, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string GetColumnLimit(string email, string boardName, int columnOrdinal)
         {
-            return factory.GetTheColumnLimit(email, boardName, columnOrdinal);
+            return factory.GetColumnLimit(email, boardName, columnOrdinal);
         }
 
 
@@ -163,7 +163,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string UpdateTaskDueDate(string email, string boardName, int columnOrdinal, int taskId, DateTime dueDate)
         {
-            return factory.UpdateTaskDateDue(email, boardName, columnOrdinal, taskId, dueDate);
+            return factory.UpdateTaskDueDate(email, boardName, columnOrdinal, taskId, dueDate);
         }
 
 
@@ -178,7 +178,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string UpdateTaskTitle(string email, string boardName, int columnOrdinal, int taskId, string title)
         {
-            return factory.ChangeTaskTitle(email, boardName, columnOrdinal, taskId, title);
+            return factory.UpdateTaskTitle(email, boardName, columnOrdinal, taskId, title);
         }
 
 
@@ -193,7 +193,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string UpdateTaskDescription(string email, string boardName, int columnOrdinal, int taskId, string description)
         {
-            return factory.ChangeTaskDescription(email, boardName, columnOrdinal, taskId, description);
+            return factory.UpdateTaskDescription(email, boardName, columnOrdinal, taskId, description);
         }
 
 
@@ -207,7 +207,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string AdvanceTask(string email, string boardName, int columnOrdinal, int taskId)
         {
-            return factory.ChangeTaskPlace(email, boardName, columnOrdinal, taskId);
+            return factory.AdvanceTask(email, boardName, columnOrdinal, taskId);
         }
 
 
@@ -255,7 +255,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>A response with a list of the in-progress tasks of the user, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string InProgressTasks(string email)
         {
-            return factory.ProTasks(email);
+            return factory.InProgressTasks(email);
         }
 
         // the new methods
@@ -268,7 +268,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>A response with a list of IDs of all user's boards, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string GetUserBoard(string email)
         {
-            return factory.GetTheUserBoard(email);
+            return factory.GetUserBoard(email);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>A response with the board's name, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string GetBoardName(int boardId)
         {
-            return factory.GetTheBoardName(boardId);
+            return factory.GetBoardName(boardId);
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string TransferOwnership(string currentOwnerEmail, string newOwnerEmail, string boardName)
         {
-            return factory.TransferTheOwnership(currentOwnerEmail, newOwnerEmail, boardName);
+            return factory.TransferOwnership(currentOwnerEmail, newOwnerEmail, boardName);
         }
 
         ///<summary>This method loads all persisted data.
@@ -338,7 +338,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string LoadData()
         {
-            return factory.LoadTheData();
+            return factory.LoadData();
         }
 
         ///<summary>This method deletes all persisted data.
@@ -350,7 +350,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         ///<returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
         public string DeleteData()
         {
-            return factory.DeleteTheData();
+            return factory.DeleteData();
         }
 
     }

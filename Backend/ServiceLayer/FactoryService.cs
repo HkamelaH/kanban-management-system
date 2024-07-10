@@ -9,29 +9,23 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
 {
     public class FactoryService
     {
-<<<<<<< HEAD
-        private Boardfacad boardController;
-        private UserFacad userController;
-=======
+
+       
+        
+
         private Boardfacad boardfacad;
         private UserFacad userFacad;
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
         public BoardService boardService;
         private UserService userService;
 
         public FactoryService()
         {
-<<<<<<< HEAD
-            userController = new UserFacad();
-            boardController = new Boardfacad(userController);
-            userService = new UserService(userController);
-            boardService = new BoardService(boardController);
-=======
+
             userFacad = new UserFacad();
             boardfacad = new Boardfacad(userFacad);
             userService = new UserService(userFacad);
             boardService = new BoardService(boardfacad);
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
+
         }
 
 
@@ -43,7 +37,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs </returns>
         public string Register(string email, string password)
         {
-<<<<<<< HEAD
+
             string json;
             json = userService.Register(email, password);
             if (!checkForError(json))
@@ -51,9 +45,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
                 boardService.GetBoardController().adduser(email);
             }
             return json;
-=======
-            throw new NotImplementedException();
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
+
         }
 
 
@@ -66,7 +58,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>A response with the user's email, unless an error occurs</returns>
         public string Login(string email, string password)
         {
-<<<<<<< HEAD
+
             string json;
             json = userService.Login(email, password);
             if (!checkForError(json))
@@ -74,11 +66,11 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
                 boardService.GetBoardController().set_status(email, true);
             }
             return json;
-=======
+
             throw new NotImplementedException();
 
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
+
         }
 
         /// <summary>
@@ -88,7 +80,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs</returns>
         public string Logout(string email)
         {
-<<<<<<< HEAD
+
             string json;
             json = userService.Logout(email);
             if (!checkForError(json))
@@ -96,11 +88,11 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
                 boardService.GetBoardController().set_status(email, false);
             }
             return json;
-=======
+
             throw new NotImplementedException();
 
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
+
         }
         /// <summary>
         /// This method limits the number of tasks in a specific column.
@@ -110,17 +102,11 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <param name="columnOrdinal">The column ID. The first column is identified by 0, the ID increases by 1 for each column</param>
         /// <param name="limit">The new limit value. A value of -1 indicates no limit.</param>
         /// <returns>An empty response, unless an error occurs</returns>
-<<<<<<< HEAD
+
         public string LimitColumn(string email, string boardName, int columnOrdinal, int limit)
         {
             return boardService.LimitColumn(email, boardName, columnOrdinal, limit);
-=======
-        public string LimitTheColumn(string email, string boardName, int columnOrdinal, int limit)
-        {
-            throw new NotImplementedException();
 
-
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
         }
 
         /// <summary>
@@ -130,19 +116,11 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <param name="boardName">The name of the board</param>
         /// <param name="columnOrdinal">The column ID. The first column is identified by 0, the ID increases by 1 for each column</param>
         /// <returns>A response with the column's limit, unless an error occurs</returns>
-<<<<<<< HEAD
         public string GetColumnLimit(string email, string boardName, int columnOrdinal)
         {
             return boardService.GetTheColumnLimit(email, boardName, columnOrdinal);
-=======
-        public string GetTheColumnLimit(string email, string boardName, int columnOrdinal)
-        {
-
-            throw new NotImplementedException();
-
-
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
         }
+      
 
 
         /// <summary>
@@ -154,12 +132,9 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>A response with the column's name, unless an error occurs</returns>
         public string GetColumnName(string email, string boardName, int columnOrdinal)
         {
-<<<<<<< HEAD
-            return boardService.GetColumnName(email, boardName, columnOrdinal);
-=======
-            throw new NotImplementedException();
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
+            return boardService.GetColumnName(email, boardName, columnOrdinal);
+
         }
 
 
@@ -173,14 +148,10 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <param name="dueDate">The due date if the new task</param>
         /// <returns>An empty response, unless an error occurs</returns>
         public string AddTask(string email, string boardName, string title, string description, DateTime dueDate)
-        {
-<<<<<<< HEAD
-            return boardService.AddTask(email, boardName, title, description, dueDate);
-=======
-            throw new NotImplementedException();
+            {
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
-        }
+                return boardService.AddTask(email, boardName, title, description, dueDate);
+            }
 
 
         /// <summary>
@@ -192,16 +163,9 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <param name="taskId">The task to be updated identified task ID</param>
         /// <param name="dueDate">The new due date of the column</param>
         /// <returns>An empty response, unless an error occurs</returns>
-<<<<<<< HEAD
         public string UpdateTaskDueDate(string email, string boardName, int columnOrdinal, int taskId, DateTime dueDate)
         {
             return boardService.UpdateTaskDateDue(email, boardName, columnOrdinal, taskId, dueDate);
-=======
-        public string UpdateTaskDateDue(string email, string boardName, int columnOrdinal, int taskId, DateTime dueDate)
-        {
-            throw new NotImplementedException();
-
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
         }
 
 
@@ -214,16 +178,10 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <param name="taskId">The task to be updated identified task ID</param>
         /// <param name="title">New title for the task</param>
         /// <returns>An empty response, unless an error occurs</returns>
-<<<<<<< HEAD
         public string UpdateTaskTitle(string email, string boardName, int columnOrdinal, int taskId, string title)
         {
             return boardService.ChangeTaskTitle(email, boardName, columnOrdinal, taskId, title);
-=======
-        public string ChangeTaskTitle(string email, string boardName, int columnOrdinal, int taskId, string title)
-        {
-            throw new NotImplementedException();
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
         }
 
 
@@ -236,17 +194,10 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <param name="taskId">The task to be updated identified task ID</param>
         /// <param name="description">New description for the task</param>
         /// <returns>An empty response, unless an error occurs</returns>
-<<<<<<< HEAD
         public string UpdateTaskDescription(string email, string boardName, int columnOrdinal, int taskId, string description)
-        {
-            return boardService.ChangeTaskDescription(email, boardName, columnOrdinal, taskId, description);
-=======
-        public string ChangeTaskDescription(string email, string boardName, int columnOrdinal, int taskId, string description)
-        {
-            throw new NotImplementedException();
-
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
-        }
+                    {
+                        return boardService.ChangeTaskDescription(email, boardName, columnOrdinal, taskId, description);
+                    }
 
 
         /// <summary>
@@ -259,12 +210,9 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>An empty response, unless an error occurs</returns>
         public string AdvanceTask(string email, string boardName, int columnOrdinal, int taskId)
         {
-<<<<<<< HEAD
-            return boardService.ChangeTaskPlace(email, boardName, columnOrdinal, taskId);
-=======
-            throw new NotImplementedException();
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
+            return boardService.ChangeTaskPlace(email, boardName, columnOrdinal, taskId);
+
         }
 
 
@@ -277,12 +225,9 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <returns>A response with a list of the column's tasks, unless an error occurs</returns>
         public string GetColumn(string email, string boardName, int columnOrdinal)
         {
-<<<<<<< HEAD
-            return boardService.GetColumn(email, boardName, columnOrdinal);
-=======
-            throw new NotImplementedException();
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
+            return boardService.GetColumn(email, boardName, columnOrdinal);
+
         }
 
 
@@ -295,17 +240,11 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <param name="email">Email of the user, must be logged in and an owner of the board.</param>
         /// <param name="name">The name of the board</param>
         /// <returns>An empty response, unless an error occurs</returns>
-<<<<<<< HEAD
-        public string RemoveBoard(string email, string name)
-        {
-            return boardService.DeleteBoard(email, name);
-=======
         public string DeleteBoard(string email, string name)
-        {
-            throw new NotImplementedException();
+                    {
+                        return boardService.DeleteBoard(email, name);
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
-        }
+                    }
 
 
         /// <summary>
@@ -313,16 +252,12 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// </summary>
         /// <param name="email">Email of the user. Must be logged in</param>
         /// <returns>A response with a list of the in-progress tasks of the user, unless an error occurs</returns>
-<<<<<<< HEAD
         public string InProgressTasks(string email)
         {
             return boardService.pr(email);
-=======
-        public string ProTasks(string email)
-        {
-            throw new NotImplementedException();
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
+       
+ 
         }
 
         /// <summary>
@@ -330,33 +265,22 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// </summary>
         /// <param name="email"></param>
         /// <returns>A response with a list of IDs of all user's boards, unless an error occurs</returns>
-<<<<<<< HEAD
-        public string GetUserBoards(string email)
-        {
-            return boardService.GetUserBoards(email);
-=======
-        public string GetTheUserBoard(string email)
-        {
-            throw new NotImplementedException();
-
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
-        }
+        public string GetUserBoard(string email)
+                    {
+                        return boardService.GetUserBoards(email);
+                    }
+       
 
         /// <summary>
         /// This method returns a board's name
         /// </summary>
         /// <param name="boardId">The board's ID</param>
         /// <returns>A response with the board's name, unless an error occurs</returns>
-<<<<<<< HEAD
         public string GetBoardName(int boardId)
         {
             return boardService.GetBoardName(boardId);
-=======
-        public string GetTheBoardName(int boardId)
-        {
-            throw new NotImplementedException();
+     
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
         }
 
         /// <summary>
@@ -365,17 +289,12 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <param name="email">The email of the user that joins the board. Must be logged in</param>
         /// <param name="boardID">The board's ID</param>
         /// <returns>An empty response, unless an error occurs</returns>
-<<<<<<< HEAD
         public string JoinBoard(string email, int boardID)
-        {
-            return boardService.JoinBoard(email, boardID);
-=======
-        public string Join(string email, int boardID)
-        {
-            throw new NotImplementedException();
+                            {
+                                return boardService.JoinBoard(email, boardID);
+                            }
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
-        }
+   
 
         /// <summary>
         /// This method removes a user from the members list of a board.
@@ -383,17 +302,10 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <param name="email">The email of the user. Must be logged in</param>
         /// <param name="boardID">The board's ID</param>
         /// <returns>An empty response, unless an error occurs </returns>
-<<<<<<< HEAD
         public string LeaveBoard(string email, int boardID)
-        {
-            return boardService.LeaveBoard(email, boardID);
-=======
-        public string LeaveTheBoard(string email, int boardID)
-        {
-            throw new NotImplementedException();
-
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
-        }
+                            {
+                                return boardService.LeaveBoard(email, boardID);
+                            }
 
         /// <summary>
         /// This method assigns a task to a user
@@ -404,17 +316,10 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// <param name="taskID">The task to be updated identified a task ID</param>        
         /// <param name="emailAssignee">Email of the asignee user</param>
         /// <returns>An empty response, unless an error occurs </returns>
-<<<<<<< HEAD
         public string AssignTask(string email, string boardName, int columnOrdinal, int taskID, string emailAssignee)
-        {
-            return boardService.AssignTask(email, boardName, columnOrdinal, taskID, emailAssignee);
-=======
-        public string AssignTheTask(string email, string boardName, int columnOrdinal, int taskID, string emailAssignee)
-        {
-            throw new NotImplementedException();
-
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
-        }
+                            {
+                                return boardService.AssignTask(email, boardName, columnOrdinal, taskID, emailAssignee);
+                            }
 
         ///<summary>This method loads all persisted data.
         ///<para>
@@ -423,23 +328,16 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         ///</para>
         /// </summary>
         /// <returns>An empty response, unless an error occurs</returns>
-<<<<<<< HEAD
         public string LoadData()
-        {
-            string json;
-            json = userService.LoadData();
-            if (!checkForError(json))
-            {
-                json = boardService.LoadData();
-            }
-            return json;
-=======
-        public string LoadTheData()
-        {
-            throw new NotImplementedException();
-
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
-        }
+                            {
+                                string json;
+                                json = userService.LoadData();
+                                if (!checkForError(json))
+                                {
+                                    json = boardService.LoadData();
+                                }
+                                return json;
+                            }
 
         ///<summary>This method deletes all persisted data.
         ///<para>
@@ -449,7 +347,6 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         /// </summary>
         ///<returns>An empty response, unless an error occurs</returns>
 
-<<<<<<< HEAD
         public string DeleteData()
         {
             string json;
@@ -464,82 +361,60 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
                 }
             }
             return json;
-=======
-        public string DeleteTheData()
-        {
-            throw new NotImplementedException();
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
 
-        }
+            /// <summary>
+            /// This method transfers a board ownership.
+            /// </summary>
+            /// <param name="currentOwnerEmail">Email of the current owner. Must be logged in</param>
+            /// <param name="newOwnerEmail">Email of the new owner</param>
+            /// <param name="boardName">The name of the board</param>
+            /// <returns>An empty response, unless an error occurs</returns>
+            public string TransferOwnership(string currentOwnerEmail, string newOwnerEmail, string boardName)
+            {
+                return boardService.TransferOwnership(currentOwnerEmail, newOwnerEmail, boardName);
 
-        /// <summary>
-        /// This method transfers a board ownership.
-        /// </summary>
-        /// <param name="currentOwnerEmail">Email of the current owner. Must be logged in</param>
-        /// <param name="newOwnerEmail">Email of the new owner</param>
-        /// <param name="boardName">The name of the board</param>
-        /// <returns>An empty response, unless an error occurs</returns>
-<<<<<<< HEAD
-        public string TransferOwnership(string currentOwnerEmail, string newOwnerEmail, string boardName)
-        {
-            return boardService.TransferOwnership(currentOwnerEmail, newOwnerEmail, boardName);
-=======
-        public string TransferTheOwnership(string currentOwnerEmail, string newOwnerEmail, string boardName)
-        {
-            throw new NotImplementedException();
+            }
+            /// <summary>
+            /// This method creates a board for the given user.
+            /// </summary>
+            /// <param name="email">Email of the user, must be logged in</param>
+            /// <param name="name">The name of the new board</param>
+            /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
+            public string CreateBoard(string email, string name)
+            {
+                return boardService.CreateBoard(email, name);
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
-        }
 
-        /// <summary>
-        /// This method creates a board for the given user.
-        /// </summary>
-        /// <param name="email">Email of the user, must be logged in</param>
-        /// <param name="name">The name of the new board</param>
-        /// <returns>An empty response, unless an error occurs (see <see cref="GradingService"/>)</returns>
-        public string CreateBoard(string email, string name)
-        {
-<<<<<<< HEAD
-            return boardService.CreateBoard(email, name);
-=======
-            throw new NotImplementedException();
-
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
-        }
+            }
 
 
 
-        public string ToJson(object obj)
-        {
-<<<<<<< HEAD
-            JsonSerializerOptions options = new JsonSerializerOptions();
-            options.WriteIndented = true;
-            options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-            string json = JsonSerializer.Serialize(obj, obj.GetType(), options);
-            return json;
-=======
-            throw new NotImplementedException();
+            public string ToJson(object obj)
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions();
+                options.WriteIndented = true;
+                options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                string json = JsonSerializer.Serialize(obj, obj.GetType(), options);
+                return json;
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
-        }
+            }
 
 
-        public bool checkForError(string json)
-        {
-<<<<<<< HEAD
-            Response curr;
-            curr = JsonSerializer.Deserialize<Response>(json);
-            return curr.CheckforError();
-=======
-            throw new NotImplementedException();
+            public bool checkForError(string json)
+            {
 
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
+                Response curr;
+                curr = JsonSerializer.Deserialize<Response>(json);
+                return curr.CheckforError();
 
+
+            }
         }
     }
 }
-<<<<<<< HEAD
+    
 
-=======
->>>>>>> 8b34183002419accedc97059d36dedf57543fcb8
+
+
+
