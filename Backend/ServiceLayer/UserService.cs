@@ -105,7 +105,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
             Response response;
             try
             {
-                userfacad.LoadTheData();
+                userFacad.LoadTheData();
                 response = new Response();
                 return JsonSerializer.Serialize(response);
             }
@@ -128,7 +128,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
             Response res;
             try
             {
-                userfacad.DeleteTheData();
+                userFacad.DeleteTheData();
                 res = new Response();
                 return JsonSerializer.Serialize(res);
             }
