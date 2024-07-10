@@ -416,7 +416,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         {
             try
             {
-                userController.DeleteUserBoard(email, boardID);
+                DALuserController.DeleteUserBoard(email, boardID);
                 return new JSONObject().put("status", "success").put("message", "Left board").toString();
             }
             catch (Exception e)
@@ -441,7 +441,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         {
             try
             {
-                taskController.AssignTask(email, boardName, columnOrdinal, taskID, emailAssignee);
+                DALtaskController.AssignTask(email, boardName, columnOrdinal, taskID, emailAssignee);
                 return new JSONObject().put("status", "success").put("message", "Task assigned").toString();
             }
             catch (Exception e)
@@ -462,7 +462,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         {
             try
             {
-                String boardName = boardController.GetBoardName(boardId);
+                String boardName = DALBoardController.GetBoardName(boardId);
                 return new JSONObject().put("status", "success").put("boardName", boardName).toString();
             }
             catch (Exception e)
@@ -486,7 +486,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         {
             try
             {
-                boardController.TransferOwnership(currentOwnerEmail, newOwnerEmail, boardName);
+                DALBoardController.TransferOwnership(currentOwnerEmail, newOwnerEmail, boardName);
                 return new JSONObject().put("status", "success").put("message", "Ownership transferred").toString();
             }
             catch (Exception e)
@@ -509,7 +509,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         {
             try
             {
-                boardController.LoadData();
+                DALBoardController.LoadData();
                 return new JSONObject().put("status", "success").put("message", "Data loaded").toString();
             }
             catch (Exception e)
@@ -530,7 +530,7 @@ namespace IntroSE.Kanban.Backend.ServiceLayer
         {
             try
             {
-                boardController.DeleteData();
+                DALBoardController.DeleteData();
                 return new JSONObject().put("status", "success").put("message", "Data deleted").toString();
             }
             catch (Exception e)
