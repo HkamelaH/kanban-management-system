@@ -1,11 +1,26 @@
-# Kanban
-Instructions: 
-* Replace "ID1_ID2_ID3" with the correct ID numbers
-* Replace the "00" number at the end with your group's number
+# Kanban Management System
 
+A team project focused on developing a Kanban-based task management system.
 
-## Group members
-213690720_213554090_214072712
+## Technologies
+- C#
+- .NET
+- Object-Oriented Programming (OOP)
+- Git
+- GitHub
 
-## Group number (from Moodle)
-44
+## Features
+- Board Management
+- Task Management
+- User Workflow Organization
+- Backend Business Logic
+- Unit Testing
+
+## Project Type
+Academic Team Project
+
+## My Contribution
+- Backend Development
+- Object-Oriented Design
+- Testing and Debugging
+- Git-based Team Collaboration
